@@ -36,7 +36,7 @@ vi.mock("./RuntimeSectionHeader", () => ({
 }));
 vi.mock("@src/components/Chart", () => ({
   CHART_AXIS_TICK: {},
-  CHART_GRID_STROKE: "currentColor",
+  CHART_GRID_STROKE: "",
   CHART_MARGIN: {},
   CHART_TOOLTIP: {},
 }));
@@ -63,9 +63,10 @@ vi.mock("recharts", () => ({
   ResponsiveContainer: ({ children }: { children: unknown }) => children,
   BarChart: ({ children }: { children: unknown }) =>
     createElement("div", { "data-testid": "quota-chart" }, children as never),
-  Bar: () => null,
+  Bar: ({ children }: { children: unknown }) => children,
+  Cell: ({ className }: { className: string }) =>
+    createElement("span", { "data-testid": "quota-bar", className }),
   CartesianGrid: () => null,
-  Cell: () => null,
   XAxis: () => null,
   YAxis: () => null,
   Tooltip: () => null,
@@ -110,6 +111,70 @@ describe("WeeklyQuotaHistoryPanel", () => {
       element.querySelectorAll('[data-testid="quota-chart"]')
     ).toHaveLength(1);
     expect(element.textContent).toContain("Account 127");
+  });
+  it("browses retained weeks locally and resets the range on account change", async () => {
+    const current = account(0);
+    current.points.unshift({
+      capturedAt: 10000 - 8 * 86400,
+      remainingPercent: 20,
+      resetAt: null,
+    });
+    mocks.state.accounts = [current, account(1)];
+    mocks.state.refresh.mockClear();
+    const element = await mount();
+    const previous = () =>
+      element.querySelector<HTMLButtonElement>(
+        'button[aria-label="Previous week"]'
+      )!;
+    const next = () =>
+      element.querySelector<HTMLButtonElement>(
+        'button[aria-label="Next week"]'
+      )!;
+    expect(next().disabled).toBe(true);
+    expect(previous().disabled).toBe(false);
+    await act(async () => previous().click());
+    expect(element.textContent).toContain("20%");
+    expect(previous().disabled).toBe(true);
+    expect(next().disabled).toBe(false);
+    await act(async () => next().click());
+    expect(element.textContent).toContain("80%");
+    expect(next().disabled).toBe(true);
+    await act(async () => previous().click());
+    const select = element.querySelector("select")!;
+    await act(async () => {
+      select.value = "1";
+      select.dispatchEvent(new Event("change", { bubbles: true }));
+    });
+    expect(element.textContent).toContain("80%");
+    expect(next().disabled).toBe(true);
+    expect(previous().disabled).toBe(true);
+    expect(mocks.state.refresh).not.toHaveBeenCalled();
+  });
+  it("uses the shared quota colors for remaining percentages", async () => {
+    mocks.state.accounts = [
+      {
+        ...account(0),
+        points: [0, 9, 10, 49, 50, 100].map((remainingPercent, index) => ({
+          capturedAt: 10000 - (5 - index) * 3600,
+          remainingPercent,
+          resetAt: null,
+        })),
+      },
+    ];
+    const element = await mount();
+    expect(
+      Array.from(
+        element.querySelectorAll('[data-testid="quota-bar"]'),
+        (bar) => bar.className
+      )
+    ).toEqual([
+      "text-danger-6",
+      "text-danger-6",
+      "text-warning-6",
+      "text-warning-6",
+      "text-success-6",
+      "text-success-6",
+    ]);
   });
   it("does not mistake a failed load for a disconnected account list", async () => {
     mocks.state.error = true;

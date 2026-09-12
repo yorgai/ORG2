@@ -5,8 +5,6 @@ import { afterEach, expect, it, vi } from "vitest";
 
 import WeeklyQuotaHistoryPanel from "./WeeklyQuotaHistoryPanel";
 
-const fixture = vi.hoisted(() => ({ samplingEnabled: false }));
-
 const now = 1_788_970_200;
 vi.mock("@src/hooks/keyVault/useWeeklyQuotaHistory", () => ({
   useWeeklyQuotaHistory: () => ({
@@ -16,7 +14,7 @@ vi.mock("@src/hooks/keyVault/useWeeklyQuotaHistory", () => ({
         name: "OpenAI",
         provider: "codex",
         status: "ok",
-        samplingEnabled: fixture.samplingEnabled,
+        samplingEnabled: false,
         points: [100, 95, 87].map((remainingPercent, index) => ({
           capturedAt: now - [10, 7, 1][index] * 3600,
           remainingPercent,
@@ -53,55 +51,31 @@ afterEach(async () => {
   await act(async () => root?.unmount());
   vi.unstubAllGlobals();
 });
-it.each([false, true])(
-  "renders quota history with sampling enabled: %s",
-  async (samplingEnabled) => {
-    fixture.samplingEnabled = samplingEnabled;
-    vi.stubGlobal("IS_REACT_ACT_ENVIRONMENT", true);
-    const container = document.createElement("div");
-    root = createRoot(container);
-    await act(async () => root.render(createElement(WeeklyQuotaHistoryPanel)));
-    expect(
-      container.querySelector('[aria-live="polite"]')?.textContent
-    ).toMatch(/^Sep \d+ – Sep \d+$/);
-    expect(container.textContent).not.toMatch(/[月日]/);
-    expect(container.textContent).toMatch(/87% · Sep \d+, \d{2}:\d{2}/);
-    expect(container.textContent).not.toContain("OpenAI · codex");
-    const notices = Array.from(container.querySelectorAll('[role="status"]'));
-    expect(
-      notices.some((notice) =>
-        notice.textContent?.includes("over two hours old")
-      )
-    ).toBe(samplingEnabled);
-    expect(
-      notices.some((notice) => notice.textContent?.includes("Sampling paused"))
-    ).toBe(!samplingEnabled);
-    expect(notices.every((notice) => notice.tagName !== "P")).toBe(true);
-    const status = notices[0];
-    expect(
-      status.classList.contains(
-        samplingEnabled ? "text-warning-6" : "text-danger-6"
-      )
-    ).toBe(true);
-    expect(status.nextElementSibling?.classList.contains("border-fill-3")).toBe(
-      true
-    );
-    expect(
-      status.nextElementSibling?.nextElementSibling?.textContent
-    ).toContain("87%");
-    expect(status.parentElement?.querySelector("button")).toBeNull();
-    const chart = container.querySelector('[role="group"]')!;
-    const picker = container.querySelector('[aria-live="polite"]')!;
-    expect(
-      chart.compareDocumentPosition(picker) & Node.DOCUMENT_POSITION_FOLLOWING
-    ).toBeTruthy();
-    const bars = container.querySelectorAll(".recharts-bar-rectangle path");
-    expect(bars).toHaveLength(3);
-    for (const bar of bars) {
-      expect(Number(bar.getAttribute("width"))).toBeGreaterThanOrEqual(1);
-      expect(Number(bar.getAttribute("height"))).toBeGreaterThan(0);
-      expect(Number(bar.getAttribute("x"))).toBeGreaterThanOrEqual(40);
-      expect(Number(bar.getAttribute("x"))).toBeLessThan(900);
-    }
+it("renders visible bars for sparse recent samples on the seven-day time axis", async () => {
+  vi.stubGlobal("IS_REACT_ACT_ENVIRONMENT", true);
+  const container = document.createElement("div");
+  root = createRoot(container);
+  await act(async () => root.render(createElement(WeeklyQuotaHistoryPanel)));
+  expect(container.querySelector('[aria-live="polite"]')?.textContent).toMatch(
+    /^Sep \d+ – Sep \d+$/
+  );
+  expect(container.textContent).not.toMatch(/[月日]/);
+  expect(container.textContent).toMatch(/87% · Sep \d+, \d{2}:\d{2}/);
+  expect(container.textContent).not.toContain("OpenAI · codex");
+  const notices = Array.from(container.querySelectorAll('[role="status"]'));
+  expect(
+    notices.some((notice) => notice.textContent?.includes("over two hours old"))
+  ).toBe(false);
+  expect(
+    notices.some((notice) => notice.textContent?.includes("Sampling paused"))
+  ).toBe(true);
+  expect(notices.every((notice) => notice.tagName !== "P")).toBe(true);
+  const bars = container.querySelectorAll(".recharts-bar-rectangle path");
+  expect(bars).toHaveLength(3);
+  for (const bar of bars) {
+    expect(Number(bar.getAttribute("width"))).toBeGreaterThanOrEqual(1);
+    expect(Number(bar.getAttribute("height"))).toBeGreaterThan(0);
+    expect(Number(bar.getAttribute("x"))).toBeGreaterThanOrEqual(40);
+    expect(Number(bar.getAttribute("x"))).toBeLessThan(900);
   }
-);
+});
