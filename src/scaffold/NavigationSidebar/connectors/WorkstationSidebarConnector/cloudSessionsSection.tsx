@@ -645,9 +645,6 @@ export function useCloudSessionsSection({
   const buildRowItem = useCloudSessionRowItemBuilder({
     presenceMap,
     selfUserId,
-    sessions,
-    localOwnSessionIds,
-    sourceEndpointUrl: auth?.supabaseUrl,
     t,
     tCommon,
     runFork,
