@@ -14,7 +14,6 @@
  */
 import { atom } from "jotai";
 
-import { getSiteNameFromUrl } from "@src/store/ui/navigationSidebarTabsAtom";
 import type { PanelState } from "@src/store/workstation/tabs";
 import {
   presentedWorkstationWorkspaceKeyAtom,
@@ -35,6 +34,7 @@ import type {
   WorkStationTab,
   WorkStationTabType,
 } from "@src/store/workstation/tabs/types";
+import { getSiteNameFromUrl } from "@src/util/url/browserDisplay";
 
 // ============================================
 // Types

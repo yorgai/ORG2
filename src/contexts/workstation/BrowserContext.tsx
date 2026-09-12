@@ -14,14 +14,11 @@ import React, {
   useContext,
   useEffect,
   useMemo,
-  useRef,
   useState,
 } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 import type { BrowserSession } from "@src/engines/BrowserCore/types";
-import { useGlobalBrowserTabs } from "@src/hooks/ui/tabs/useGlobalTabs";
-import { useSyncBrowserTabs } from "@src/hooks/ui/tabs/useSyncGlobalTabs";
 import {
   NEW_PRIVATE_TAB_TITLE,
   NEW_TAB_TITLE,
@@ -118,16 +115,6 @@ const getDefaultState = (): {
 export const BrowserProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const { removeBrowserTab } = useGlobalBrowserTabs();
-
-  const sessionsRef = useRef<BrowserSession[]>([]);
-  const removeBrowserTabRef = useRef(removeBrowserTab);
-
-  // Keep removeBrowserTab ref up to date
-  useEffect(() => {
-    removeBrowserTabRef.current = removeBrowserTab;
-  }, [removeBrowserTab]);
-
   const [sessions, setSessions] = useState<BrowserSession[]>(
     () => getDefaultState().sessions
   );
@@ -135,24 +122,6 @@ export const BrowserProvider: React.FC<{ children: React.ReactNode }> = ({
     () => getDefaultState().activeSessionId
   );
   const [filterValue, setFilterValue] = useState<string>("");
-
-  // Keep sessionsRef up to date
-  useEffect(() => {
-    sessionsRef.current = sessions;
-  }, [sessions]);
-
-  // Cleanup browser sessions from global atom when provider unmounts
-  useEffect(() => {
-    return () => {
-      const currentSessions = sessionsRef.current;
-      currentSessions.forEach((session) => {
-        removeBrowserTabRef.current(session.id);
-      });
-    };
-  }, []); // Empty deps - only run on unmount
-
-  // ✨ Sync to global tabs state (for components that use navigationSidebarTabsAtom)
-  useSyncBrowserTabs(sessions, activeSessionId);
 
   // Ensure active session exists (or is empty if no sessions)
   useEffect(() => {

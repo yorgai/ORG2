@@ -8,7 +8,6 @@
  * Logical grouping:
  * - Sidebar: sidebarAtom, hoverSidebarAtom, collapseStateAtom
  * - Editor: editorSettingsAtom, fileTreeSelectionAtom, searchResultSelectionAtom
- * - Tabs: navigationSidebarTabsAtom
  */
 
 // Sidebar
@@ -26,10 +25,6 @@ export * from "./searchResultSelectionAtom";
 // Settings
 export * from "./languageAtom";
 
-// Tabs
-export * from "./navigationSidebarTabsAtom";
-export * from "./globalTabsActions";
-
 // Other UI state
 export * from "./uiAtom";
 export * from "./backgroundConfigAtom";
@@ -46,7 +41,6 @@ export * from "./kanbanViewStateAtom";
 export * from "./workManagementCreatorAtom";
 export * from "./sideChatAtom";
 export * from "./modelSelectorAtom";
-export * from "./globalTabsTypes";
 export * from "./guideHighlightAtom";
 
 // WorkStation / Chat / Simulator / Workspace Folders (formerly workspaceAtom barrel)

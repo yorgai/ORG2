@@ -32,9 +32,9 @@ import {
 import { PANEL_CONSTANTS } from "@src/modules/WorkStation/CodeEditor/Panels/EditorPrimarySidebar/config";
 import { PrimarySidebarLayoutWithSections } from "@src/modules/WorkStation/shared";
 import type { PrimarySidebarTab } from "@src/modules/WorkStation/shared/PrimarySidebarLayout/PrimarySidebarLayoutWithSections";
-import { getSiteNameFromUrl } from "@src/store/ui/navigationSidebarTabsAtom";
 import { isPlaceholderBrowserSessionTitle } from "@src/store/workstation/browser/tabs";
 import { deriveToolAction } from "@src/util/ui/rendering/toolAction";
+import { getSiteNameFromUrl } from "@src/util/url/browserDisplay";
 
 import {
   type EntryCategory,

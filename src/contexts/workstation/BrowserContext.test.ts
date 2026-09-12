@@ -5,14 +5,6 @@ import { afterEach, beforeEach, expect, it, vi } from "vitest";
 
 import { BrowserProvider, useBrowserContext } from "./BrowserContext";
 
-const removeTab = vi.hoisted(() => vi.fn());
-vi.mock("@src/hooks/ui/tabs/useGlobalTabs", () => ({
-  useGlobalBrowserTabs: () => ({ removeBrowserTab: removeTab }),
-}));
-vi.mock("@src/hooks/ui/tabs/useSyncGlobalTabs", () => ({
-  useSyncBrowserTabs: () => {},
-}));
-
 beforeEach(() => {
   localStorage.clear();
   vi.stubGlobal("IS_REACT_ACT_ENVIRONMENT", true);
@@ -34,6 +26,7 @@ function SessionCreator() {
 }
 
 it("creates and persists new sessions without timestamped browsing history", async () => {
+  const persist = vi.spyOn(Storage.prototype, "setItem");
   const container = document.createElement("div");
   const root = createRoot(container);
   try {
@@ -52,6 +45,9 @@ it("creates and persists new sessions without timestamped browsing history", asy
     expect(saved.sessions[0].historyIndex).toBe(0);
   } finally {
     await act(async () => root.unmount());
+    const keys = persist.mock.calls.map(([key]) => key);
+    persist.mockRestore();
+    expect(keys).not.toContain("orgii-global-tabs");
   }
 });
 

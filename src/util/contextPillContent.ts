@@ -9,7 +9,6 @@ import { invoke } from "@tauri-apps/api/core";
 
 import { type TodoEntry, projectApi } from "@src/api/http/project";
 import { storePillText } from "@src/config/pillTokens";
-import { navigationSidebarTabsAtom } from "@src/store/ui/navigationSidebarTabsAtom";
 import { mainPaneTabsAtom } from "@src/store/workstation/tabs";
 import { getInstrumentedStore } from "@src/util/core/state/instrumentedStore";
 
@@ -48,14 +47,8 @@ export function loadBrowserPillContent(tabId: string, pillPath: string): void {
     .find(
       (tab) => tab.type === "browser-session" && tab.data.sessionId === tabId
     );
-  const legacyTabs = store.get(navigationSidebarTabsAtom);
-  const legacyTab = legacyTabs.browser.find(
-    (browserTab) => browserTab.id === tabId
-  );
   const url =
-    (typeof mainPaneTab?.data.url === "string" ? mainPaneTab.data.url : "") ||
-    legacyTab?.url ||
-    "";
+    typeof mainPaneTab?.data.url === "string" ? mainPaneTab.data.url : "";
   const webviewLabel = `browser-session-${tabId}`;
 
   const promise = invoke<string>("get_full_html_document", {

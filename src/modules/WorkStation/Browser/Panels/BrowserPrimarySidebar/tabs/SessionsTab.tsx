@@ -20,12 +20,12 @@ import {
   HugeiconsIcon,
   Loading03Icon,
 } from "@src/icons";
-import { getSiteNameFromUrl } from "@src/store/ui/navigationSidebarTabsAtom";
 import {
   NEW_TAB_TITLE,
   isPlaceholderBrowserSessionTitle,
   translatePlaceholderBrowserSessionTitle,
 } from "@src/store/workstation/browser/tabs";
+import { getSiteNameFromUrl } from "@src/util/url/browserDisplay";
 
 // ============================================
 // Types

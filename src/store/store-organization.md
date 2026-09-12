@@ -153,13 +153,12 @@ import {
 
 UI-only state that doesn't contain business logic.
 
-| File                           | Purpose                          |
-| ------------------------------ | -------------------------------- |
-| `sidebarAtom.ts`               | Sidebar collapsed/expanded state |
-| `notificationAtom.ts`          | Toast notifications              |
-| `editorSettingsAtom.ts`        | Editor appearance (font, theme)  |
-| `languageAtom.ts`              | i18n language selection          |
-| `navigationSidebarTabsAtom.ts` | Global tab state                 |
+| File                    | Purpose                          |
+| ----------------------- | -------------------------------- |
+| `sidebarAtom.ts`        | Sidebar collapsed/expanded state |
+| `notificationAtom.ts`   | Toast notifications              |
+| `editorSettingsAtom.ts` | Editor appearance (font, theme)  |
+| `languageAtom.ts`       | i18n language selection          |
 
 ### Other cross-cutting folders
 

@@ -22,7 +22,7 @@ import {
   InternetIcon,
   Loading03Icon,
 } from "@src/icons";
-import { getFaviconUrl } from "@src/store/ui/navigationSidebarTabsAtom";
+import { getFaviconUrl } from "@src/util/url/browserDisplay";
 
 interface FaviconIconProps {
   url: string | undefined;
