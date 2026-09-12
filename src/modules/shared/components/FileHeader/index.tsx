@@ -14,7 +14,15 @@
  *   - `FileHeaderMoreMenu`    → the trailing ellipsis dropdown menu.
  *   - `FileHeaderShell`       → inline vs teleport-to-workstation wrapper.
  */
-import React, { memo, useCallback, useEffect, useRef, useState } from "react";
+import React, {
+  memo,
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
+import { createPortal } from "react-dom";
 import { useTranslation } from "react-i18next";
 
 import Button from "@src/components/Button";
@@ -34,6 +42,7 @@ import { DiffViewModeToggle } from "../DiffViewModeToggle";
 import BreadcrumbFileHeader from "./BreadcrumbFileHeader";
 import { FileHeaderMoreMenu } from "./FileHeaderMoreMenu";
 import { FileHeaderShell } from "./FileHeaderShell";
+import { FileHeaderToolbarContext } from "./FileHeaderToolbarContext";
 
 const RELOAD_MENU_COOLDOWN_MS = 1200;
 
@@ -232,6 +241,7 @@ export const FileHeader: React.FC<FileHeaderProps> = memo(
         loading ?? false,
         reloadSpinPersistenceKey
       );
+    const toolbarTarget = useContext(FileHeaderToolbarContext);
     const [moreMenuVisible, setMoreMenuVisible] = useState(false);
     const [reloadMenuCoolingDown, setReloadMenuCoolingDown] = useState(false);
     const reloadMenuCooldownTimerRef = useRef<ReturnType<
@@ -397,8 +407,59 @@ export const FileHeader: React.FC<FileHeaderProps> = memo(
       showCloseAction ||
       !!extraActions;
 
+    const viewModeToggle = showViewModeToggle ? (
+      <DiffViewModeToggle
+        viewMode={viewMode}
+        onChange={onViewModeChange}
+        t={t}
+      />
+    ) : null;
+    const moreMenu = showMoreMenu ? (
+      <FileHeaderMoreMenu
+        renderFileActions={renderFileActions}
+        showReloadButton={showReloadButton}
+        showSearchAction={showSearchAction}
+        showGoToLineAction={showGoToLineAction}
+        showSaveAction={showSaveAction}
+        showDiscardAction={showDiscardAction}
+        showCopyRelativePathAction={showCopyRelativePathAction}
+        showRevealInFileManagerAction={showRevealInFileManagerAction}
+        showLineNumbersToggle={showLineNumbersToggle}
+        showWordWrapToggle={showWordWrapToggle}
+        showMinimapToggle={showMinimapToggle}
+        showHighlightActiveLineToggle={showHighlightActiveLineToggle}
+        showGitBlameToggle={showGitBlameToggle}
+        showMoreSettingsAction={showMoreSettingsAction}
+        lineNumbersEnabled={lineNumbersEnabled}
+        wordWrapEnabled={wordWrapEnabled}
+        minimapEnabled={minimapEnabled}
+        highlightActiveLineEnabled={highlightActiveLineEnabled}
+        gitBlameEnabled={gitBlameEnabled}
+        loading={!!loading}
+        hasUnsavedChanges={hasUnsavedChanges}
+        reloadSpinClass={reloadSpinClass}
+        reloadMenuCoolingDown={reloadMenuCoolingDown}
+        menuVisible={moreMenuVisible}
+        setMenuVisible={setMoreMenuVisible}
+        onSaveClick={handleSaveMenuClick}
+        onDiscardClick={handleDiscardMenuClick}
+        onSearchClick={handleSearchMenuClick}
+        onGoToLineClick={handleGoToLineMenuClick}
+        onCopyRelativePathClick={handleCopyRelativePathMenuClick}
+        onRevealInFileManagerClick={handleRevealInFileManagerMenuClick}
+        onReloadClick={handleReloadMenuClick}
+        onLineNumbersChange={handleLineNumbersChange}
+        onWordWrapChange={handleWordWrapChange}
+        onMinimapChange={handleMinimapChange}
+        onHighlightActiveLineChange={handleHighlightActiveLineChange}
+        onGitBlameChange={handleGitBlameChange}
+        onMoreSettingsClick={handleMoreSettingsMenuClick}
+      />
+    ) : null;
+
     const headerInner = (
       <>
+        {toolbarTarget && createPortal(moreMenu, toolbarTarget)}
         {/* Optional leading content (rendered before the breadcrumb) */}
         {leadingSlot && (
           <div className="flex shrink-0 items-center">{leadingSlot}</div>
@@ -434,7 +495,9 @@ export const FileHeader: React.FC<FileHeaderProps> = memo(
             )}
 
             {/* Separator before tab pills */}
-            {(showViewModeToggle || showCustomToggle || showPreviewButton) &&
+            {((showViewModeToggle && !toolbarTarget) ||
+              showCustomToggle ||
+              showPreviewButton) &&
               hasStats &&
               (additions! > 0 || deletions! > 0) && (
                 <div
@@ -444,13 +507,7 @@ export const FileHeader: React.FC<FileHeaderProps> = memo(
                 />
               )}
             {/* View Mode Toggle (for diffs) */}
-            {showViewModeToggle && (
-              <DiffViewModeToggle
-                viewMode={viewMode}
-                onChange={onViewModeChange}
-                t={t}
-              />
-            )}
+            {showViewModeToggle && !toolbarTarget && viewModeToggle}
 
             {/* Custom Toggle — TabPill pill (matches source control / preview) */}
             {showCustomToggle && (
@@ -507,69 +564,22 @@ export const FileHeader: React.FC<FileHeaderProps> = memo(
             )}
 
             {/* Vertical separator: tab switches | other buttons */}
-            {showAnyTabSwitch && (showHeaderActionButtons || extraActions) && (
-              <div
-                className={`${PANEL_HEADER_TOKENS.verticalSeparator} mx-1.5`}
-                role="separator"
-                aria-hidden
-              />
-            )}
+            {showAnyTabSwitch &&
+              !toolbarTarget &&
+              (showHeaderActionButtons || extraActions) && (
+                <div
+                  className={`${PANEL_HEADER_TOKENS.verticalSeparator} mx-1.5`}
+                  role="separator"
+                  aria-hidden
+                />
+              )}
 
             {(showHeaderActionButtons || beforeMoreMenuSlot) && (
               <span className="flex items-center gap-px">
                 {beforeMoreMenuSlot}
 
                 {/* More actions */}
-                {showMoreMenu && (
-                  <FileHeaderMoreMenu
-                    renderFileActions={renderFileActions}
-                    showReloadButton={showReloadButton}
-                    showSearchAction={showSearchAction}
-                    showGoToLineAction={showGoToLineAction}
-                    showSaveAction={showSaveAction}
-                    showDiscardAction={showDiscardAction}
-                    showCopyRelativePathAction={showCopyRelativePathAction}
-                    showRevealInFileManagerAction={
-                      showRevealInFileManagerAction
-                    }
-                    showLineNumbersToggle={showLineNumbersToggle}
-                    showWordWrapToggle={showWordWrapToggle}
-                    showMinimapToggle={showMinimapToggle}
-                    showHighlightActiveLineToggle={
-                      showHighlightActiveLineToggle
-                    }
-                    showGitBlameToggle={showGitBlameToggle}
-                    showMoreSettingsAction={showMoreSettingsAction}
-                    lineNumbersEnabled={lineNumbersEnabled}
-                    wordWrapEnabled={wordWrapEnabled}
-                    minimapEnabled={minimapEnabled}
-                    highlightActiveLineEnabled={highlightActiveLineEnabled}
-                    gitBlameEnabled={gitBlameEnabled}
-                    loading={!!loading}
-                    hasUnsavedChanges={hasUnsavedChanges}
-                    reloadSpinClass={reloadSpinClass}
-                    reloadMenuCoolingDown={reloadMenuCoolingDown}
-                    menuVisible={moreMenuVisible}
-                    setMenuVisible={setMoreMenuVisible}
-                    onSaveClick={handleSaveMenuClick}
-                    onDiscardClick={handleDiscardMenuClick}
-                    onSearchClick={handleSearchMenuClick}
-                    onGoToLineClick={handleGoToLineMenuClick}
-                    onCopyRelativePathClick={handleCopyRelativePathMenuClick}
-                    onRevealInFileManagerClick={
-                      handleRevealInFileManagerMenuClick
-                    }
-                    onReloadClick={handleReloadMenuClick}
-                    onLineNumbersChange={handleLineNumbersChange}
-                    onWordWrapChange={handleWordWrapChange}
-                    onMinimapChange={handleMinimapChange}
-                    onHighlightActiveLineChange={
-                      handleHighlightActiveLineChange
-                    }
-                    onGitBlameChange={handleGitBlameChange}
-                    onMoreSettingsClick={handleMoreSettingsMenuClick}
-                  />
-                )}
+                {showMoreMenu && !toolbarTarget && moreMenu}
 
                 {showOpenFileAction && onFileSelect && (
                   <Button
