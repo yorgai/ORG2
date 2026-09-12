@@ -1765,6 +1765,20 @@
     "title": "会话"
   },
   "sourceControl": {
+    "fileMenu": {
+      "viewChanges": "查看更改",
+      "openFileInNewTab": "在新标签页中打开文件",
+      "stageChanges": "暂存更改",
+      "unstageChanges": "取消暂存更改",
+      "discardChanges": "放弃更改",
+      "markResolved": "标记为已解决（暂存）",
+      "acceptCurrent": "接受当前更改（我们的）",
+      "acceptIncoming": "接受传入更改（他们的）",
+      "stageChangesCount": "暂存 {{count}} 项更改",
+      "unstageChangesCount": "取消暂存 {{count}} 项更改",
+      "discardChangesCount": "放弃 {{count}} 项更改",
+      "markResolvedCount": "将 {{count}} 项更改标记为已解决"
+    },
     "notGitInitialized": "未初始化 Git",
     "notGitInitializedSubtitle": "初始化 Git 后即可在此工作目录跟踪更改、创建提交并使用分支工具。",
     "initializeGit": "初始化 Git",

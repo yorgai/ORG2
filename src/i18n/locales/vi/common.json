@@ -1934,6 +1934,20 @@
     "title": "Phiên"
   },
   "sourceControl": {
+    "fileMenu": {
+      "viewChanges": "Xem thay đổi",
+      "openFileInNewTab": "Mở tệp trong thẻ mới",
+      "stageChanges": "Đưa thay đổi vào vùng chờ",
+      "unstageChanges": "Bỏ thay đổi khỏi vùng chờ",
+      "discardChanges": "Loại bỏ thay đổi",
+      "markResolved": "Đánh dấu đã giải quyết (đưa vào vùng chờ)",
+      "acceptCurrent": "Chấp nhận thay đổi hiện tại (của chúng ta)",
+      "acceptIncoming": "Chấp nhận thay đổi đến (của họ)",
+      "stageChangesCount": "Đưa thay đổi vào vùng chờ ({{count}})",
+      "unstageChangesCount": "Bỏ thay đổi khỏi vùng chờ ({{count}})",
+      "discardChangesCount": "Loại bỏ thay đổi ({{count}})",
+      "markResolvedCount": "Đánh dấu đã giải quyết ({{count}})"
+    },
     "notGitInitialized": "Git chưa được khởi tạo",
     "notGitInitializedSubtitle": "Khởi tạo Git để theo dõi thay đổi, tạo commit và dùng công cụ branch trong thư mục làm việc này.",
     "initializeGit": "Khởi tạo Git",

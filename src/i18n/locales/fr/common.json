@@ -1934,6 +1934,20 @@
     "title": "Sessions"
   },
   "sourceControl": {
+    "fileMenu": {
+      "viewChanges": "Afficher les modifications",
+      "openFileInNewTab": "Ouvrir le fichier dans un nouvel onglet",
+      "stageChanges": "Indexer les modifications",
+      "unstageChanges": "Désindexer les modifications",
+      "discardChanges": "Abandonner les modifications",
+      "markResolved": "Marquer comme résolu (indexer)",
+      "acceptCurrent": "Accepter les modifications actuelles (les nôtres)",
+      "acceptIncoming": "Accepter les modifications entrantes (les leurs)",
+      "stageChangesCount": "Indexer les modifications ({{count}})",
+      "unstageChangesCount": "Désindexer les modifications ({{count}})",
+      "discardChangesCount": "Abandonner les modifications ({{count}})",
+      "markResolvedCount": "Marquer comme résolu ({{count}})"
+    },
     "notGitInitialized": "Git non initialisé",
     "notGitInitializedSubtitle": "Initialisez Git pour suivre les changements, créer des commits et utiliser les outils de branche dans ce répertoire de travail.",
     "initializeGit": "Initialiser Git",

@@ -1934,6 +1934,20 @@
     "title": "Сессии"
   },
   "sourceControl": {
+    "fileMenu": {
+      "viewChanges": "Показать изменения",
+      "openFileInNewTab": "Открыть файл в новой вкладке",
+      "stageChanges": "Индексировать изменения",
+      "unstageChanges": "Убрать изменения из индекса",
+      "discardChanges": "Отменить изменения",
+      "markResolved": "Отметить как решённое (индексировать)",
+      "acceptCurrent": "Принять текущие изменения (наши)",
+      "acceptIncoming": "Принять входящие изменения (их)",
+      "stageChangesCount": "Индексировать изменения ({{count}})",
+      "unstageChangesCount": "Убрать изменения из индекса ({{count}})",
+      "discardChangesCount": "Отменить изменения ({{count}})",
+      "markResolvedCount": "Отметить как решённое ({{count}})"
+    },
     "notGitInitialized": "Git не инициализирован",
     "notGitInitializedSubtitle": "Инициализируйте Git, чтобы отслеживать изменения, создавать коммиты и использовать инструменты веток в этом рабочем каталоге.",
     "initializeGit": "Инициализировать Git",

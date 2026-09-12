@@ -1934,6 +1934,20 @@
     "title": "Sesiones"
   },
   "sourceControl": {
+    "fileMenu": {
+      "viewChanges": "Ver cambios",
+      "openFileInNewTab": "Abrir archivo en una pestaña nueva",
+      "stageChanges": "Preparar cambios",
+      "unstageChanges": "Quitar cambios del área de preparación",
+      "discardChanges": "Descartar cambios",
+      "markResolved": "Marcar como resuelto (preparar)",
+      "acceptCurrent": "Aceptar cambios actuales (nuestros)",
+      "acceptIncoming": "Aceptar cambios entrantes (suyos)",
+      "stageChangesCount": "Preparar cambios ({{count}})",
+      "unstageChangesCount": "Quitar cambios del área de preparación ({{count}})",
+      "discardChangesCount": "Descartar cambios ({{count}})",
+      "markResolvedCount": "Marcar como resuelto ({{count}})"
+    },
     "notGitInitialized": "Git no inicializado",
     "notGitInitializedSubtitle": "Inicializa Git para seguir cambios, crear commits y usar herramientas de ramas en este directorio de trabajo.",
     "initializeGit": "Inicializar Git",

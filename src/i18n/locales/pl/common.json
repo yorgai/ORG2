@@ -1934,6 +1934,20 @@
     "title": "Sesje"
   },
   "sourceControl": {
+    "fileMenu": {
+      "viewChanges": "Pokaż zmiany",
+      "openFileInNewTab": "Otwórz plik w nowej karcie",
+      "stageChanges": "Dodaj zmiany do indeksu",
+      "unstageChanges": "Usuń zmiany z indeksu",
+      "discardChanges": "Odrzuć zmiany",
+      "markResolved": "Oznacz jako rozwiązane (dodaj do indeksu)",
+      "acceptCurrent": "Zaakceptuj bieżące zmiany (nasze)",
+      "acceptIncoming": "Zaakceptuj przychodzące zmiany (ich)",
+      "stageChangesCount": "Dodaj zmiany do indeksu ({{count}})",
+      "unstageChangesCount": "Usuń zmiany z indeksu ({{count}})",
+      "discardChangesCount": "Odrzuć zmiany ({{count}})",
+      "markResolvedCount": "Oznacz jako rozwiązane ({{count}})"
+    },
     "notGitInitialized": "Git nie został zainicjowany",
     "notGitInitializedSubtitle": "Zainicjuj Git, aby śledzić zmiany, tworzyć commity i używać narzędzi gałęzi w tym katalogu roboczym.",
     "initializeGit": "Zainicjuj Git",

@@ -1934,6 +1934,20 @@
     "title": "會話"
   },
   "sourceControl": {
+    "fileMenu": {
+      "viewChanges": "檢視變更",
+      "openFileInNewTab": "在新分頁中開啟檔案",
+      "stageChanges": "暫存變更",
+      "unstageChanges": "取消暫存變更",
+      "discardChanges": "捨棄變更",
+      "markResolved": "標記為已解決（暫存）",
+      "acceptCurrent": "接受目前的變更（我們的）",
+      "acceptIncoming": "接受傳入的變更（他們的）",
+      "stageChangesCount": "暫存 {{count}} 項變更",
+      "unstageChangesCount": "取消暫存 {{count}} 項變更",
+      "discardChangesCount": "捨棄 {{count}} 項變更",
+      "markResolvedCount": "將 {{count}} 項變更標記為已解決"
+    },
     "notGitInitialized": "尚未初始化 Git",
     "notGitInitializedSubtitle": "初始化 Git 後即可在此工作目錄追蹤變更、建立提交並使用分支工具。",
     "initializeGit": "初始化 Git",

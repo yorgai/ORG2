@@ -1765,6 +1765,20 @@
     "title": "Sessions"
   },
   "sourceControl": {
+    "fileMenu": {
+      "viewChanges": "View Changes",
+      "openFileInNewTab": "Open File in New Tab",
+      "stageChanges": "Stage Changes",
+      "unstageChanges": "Unstage Changes",
+      "discardChanges": "Discard Changes",
+      "markResolved": "Mark as Resolved (Stage)",
+      "acceptCurrent": "Accept Current Changes (Ours)",
+      "acceptIncoming": "Accept Incoming Changes (Theirs)",
+      "stageChangesCount": "Stage Changes ({{count}})",
+      "unstageChangesCount": "Unstage Changes ({{count}})",
+      "discardChangesCount": "Discard Changes ({{count}})",
+      "markResolvedCount": "Mark as Resolved ({{count}})"
+    },
     "notGitInitialized": "Not git initialized",
     "notGitInitializedSubtitle": "Initialize Git to track changes, create commits, and use branch tools in this working directory.",
     "initializeGit": "Initialize Git",

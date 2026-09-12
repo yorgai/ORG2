@@ -1934,6 +1934,20 @@
     "title": "セッション"
   },
   "sourceControl": {
+    "fileMenu": {
+      "viewChanges": "変更を表示",
+      "openFileInNewTab": "新しいタブでファイルを開く",
+      "stageChanges": "変更をステージ",
+      "unstageChanges": "変更のステージを解除",
+      "discardChanges": "変更を破棄",
+      "markResolved": "解決済みとしてマーク（ステージ）",
+      "acceptCurrent": "現在の変更を採用（ours）",
+      "acceptIncoming": "取り込む変更を採用（theirs）",
+      "stageChangesCount": "変更をステージ（{{count}} 件）",
+      "unstageChangesCount": "変更のステージを解除（{{count}} 件）",
+      "discardChangesCount": "変更を破棄（{{count}} 件）",
+      "markResolvedCount": "解決済みとしてマーク（{{count}} 件）"
+    },
     "notGitInitialized": "Git 未初期化",
     "notGitInitializedSubtitle": "Git を初期化すると、この作業ディレクトリで変更の追跡、コミット作成、ブランチツールを使用できます。",
     "initializeGit": "Git を初期化",

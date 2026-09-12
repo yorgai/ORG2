@@ -1934,6 +1934,20 @@
     "title": "Oturumlar"
   },
   "sourceControl": {
+    "fileMenu": {
+      "viewChanges": "Değişiklikleri görüntüle",
+      "openFileInNewTab": "Dosyayı yeni sekmede aç",
+      "stageChanges": "Değişiklikleri hazırla",
+      "unstageChanges": "Değişiklikleri hazırlamadan çıkar",
+      "discardChanges": "Değişiklikleri at",
+      "markResolved": "Çözüldü olarak işaretle (hazırla)",
+      "acceptCurrent": "Geçerli değişiklikleri kabul et (bizimki)",
+      "acceptIncoming": "Gelen değişiklikleri kabul et (onlarınki)",
+      "stageChangesCount": "Değişiklikleri hazırla ({{count}})",
+      "unstageChangesCount": "Değişiklikleri hazırlamadan çıkar ({{count}})",
+      "discardChangesCount": "Değişiklikleri at ({{count}})",
+      "markResolvedCount": "Çözüldü olarak işaretle ({{count}})"
+    },
     "notGitInitialized": "Git başlatılmadı",
     "notGitInitializedSubtitle": "Bu çalışma dizininde değişiklikleri izlemek, commit oluşturmak ve branch araçlarını kullanmak için Git'i başlatın.",
     "initializeGit": "Git'i başlat",

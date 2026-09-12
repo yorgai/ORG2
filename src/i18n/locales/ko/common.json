@@ -1934,6 +1934,20 @@
     "title": "세션"
   },
   "sourceControl": {
+    "fileMenu": {
+      "viewChanges": "변경 사항 보기",
+      "openFileInNewTab": "새 탭에서 파일 열기",
+      "stageChanges": "변경 사항 스테이징",
+      "unstageChanges": "변경 사항 스테이징 취소",
+      "discardChanges": "변경 사항 버리기",
+      "markResolved": "해결됨으로 표시 (스테이징)",
+      "acceptCurrent": "현재 변경 사항 수락 (ours)",
+      "acceptIncoming": "들어오는 변경 사항 수락 (theirs)",
+      "stageChangesCount": "변경 사항 스테이징 ({{count}}개)",
+      "unstageChangesCount": "변경 사항 스테이징 취소 ({{count}}개)",
+      "discardChangesCount": "변경 사항 버리기 ({{count}}개)",
+      "markResolvedCount": "해결됨으로 표시 ({{count}}개)"
+    },
     "notGitInitialized": "Git 초기화 안 됨",
     "notGitInitializedSubtitle": "Git을 초기화하면 이 작업 디렉터리에서 변경 사항 추적, 커밋 생성, 브랜치 도구를 사용할 수 있습니다.",
     "initializeGit": "Git 초기화",

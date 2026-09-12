@@ -20,8 +20,6 @@ import {
   popupNativeMenu,
 } from "@src/util/platform/tauri/nativeMenuPopup";
 
-import { GIT_LABELS } from "../config";
-
 const log = createLogger("SourceControlContextMenu");
 
 // ============================================
@@ -42,22 +40,27 @@ export function getSourceControlContextMenuActionLabels(options: {
   changeCount: number;
 }) {
   const { isDirectory, isStaged, changeCount } = options;
-  const changesLabel = `${changeCount} ${changeCount === 1 ? "change" : "changes"}`;
+  const t = i18next.t.bind(i18next);
+  const count = changeCount;
 
   return {
+    viewChanges: t("common:sourceControl.fileMenu.viewChanges"),
+    openFileInNewTab: t("common:sourceControl.fileMenu.openFileInNewTab"),
+    acceptCurrent: t("common:sourceControl.fileMenu.acceptCurrent"),
+    acceptIncoming: t("common:sourceControl.fileMenu.acceptIncoming"),
     stageToggle: isDirectory
       ? isStaged
-        ? `Unstage ${changesLabel}`
-        : `Stage ${changesLabel}`
+        ? t("common:sourceControl.fileMenu.unstageChangesCount", { count })
+        : t("common:sourceControl.fileMenu.stageChangesCount", { count })
       : isStaged
-        ? GIT_LABELS.unstageChanges
-        : GIT_LABELS.stageChanges,
+        ? t("common:sourceControl.fileMenu.unstageChanges")
+        : t("common:sourceControl.fileMenu.stageChanges"),
     markResolved: isDirectory
-      ? `Mark ${changesLabel} as Resolved`
-      : GIT_LABELS.markAsResolved,
+      ? t("common:sourceControl.fileMenu.markResolvedCount", { count })
+      : t("common:sourceControl.fileMenu.markResolved"),
     discard: isDirectory
-      ? `Discard ${changesLabel}`
-      : GIT_LABELS.discardChanges,
+      ? t("common:sourceControl.fileMenu.discardChangesCount", { count })
+      : t("common:sourceControl.fileMenu.discardChanges"),
   };
 }
 
@@ -137,7 +140,7 @@ export default function SourceControlContextMenu(
             if (!isDirectory) {
               // --- Open Changes (diff view) ---
               items.push({
-                text: GIT_LABELS.openChanges,
+                text: labels.viewChanges,
                 action: () => {
                   const ref = contextMenuRef.current;
                   if (ref?.onSelect) {
@@ -148,7 +151,7 @@ export default function SourceControlContextMenu(
 
               // --- Open File ---
               items.push({
-                text: t("common:tooltips.openFile"),
+                text: labels.openFileInNewTab,
                 action: () => {
                   const ref = contextMenuRef.current;
                   if (ref) {
@@ -220,7 +223,7 @@ export default function SourceControlContextMenu(
               items.push({ item: "Separator" });
 
               items.push({
-                text: GIT_LABELS.acceptCurrentChange,
+                text: labels.acceptCurrent,
                 action: async () => {
                   const ref = contextMenuRef.current;
                   if (ref) {
@@ -231,7 +234,7 @@ export default function SourceControlContextMenu(
               });
 
               items.push({
-                text: GIT_LABELS.acceptIncomingChange,
+                text: labels.acceptIncoming,
                 action: async () => {
                   const ref = contextMenuRef.current;
                   if (ref) {

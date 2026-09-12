@@ -1934,6 +1934,20 @@
     "title": "Sitzungen"
   },
   "sourceControl": {
+    "fileMenu": {
+      "viewChanges": "Änderungen anzeigen",
+      "openFileInNewTab": "Datei in neuem Tab öffnen",
+      "stageChanges": "Änderungen vormerken",
+      "unstageChanges": "Vormerkung aufheben",
+      "discardChanges": "Änderungen verwerfen",
+      "markResolved": "Als gelöst markieren (vormerken)",
+      "acceptCurrent": "Aktuelle Änderungen übernehmen (unsere)",
+      "acceptIncoming": "Eingehende Änderungen übernehmen (deren)",
+      "stageChangesCount": "Änderungen vormerken ({{count}})",
+      "unstageChangesCount": "Vormerkung aufheben ({{count}})",
+      "discardChangesCount": "Änderungen verwerfen ({{count}})",
+      "markResolvedCount": "Als gelöst markieren ({{count}})"
+    },
     "notGitInitialized": "Git nicht initialisiert",
     "notGitInitializedSubtitle": "Initialisiere Git, um Änderungen zu verfolgen, Commits zu erstellen und Branch-Werkzeuge in diesem Arbeitsverzeichnis zu nutzen.",
     "initializeGit": "Git initialisieren",
