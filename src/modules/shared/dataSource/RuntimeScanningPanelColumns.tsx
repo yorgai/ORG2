@@ -33,7 +33,6 @@ import { formatRelativeElapsedShort } from "@src/util/data/formatters/date";
 import { statusTagFor } from "./RuntimeScanningPanelHelpers";
 import RuntimeScanningPanelSourceIcon from "./RuntimeScanningPanelSourceIcon";
 import type { SourceRow } from "./RuntimeScanningPanelTypes";
-import { RUNTIME_REFRESH_BUTTON_PROPS } from "./RuntimeSectionHeader";
 
 export interface RuntimeScanningPanelColumnsParams {
   t: TFunction<"sessions">;
@@ -119,27 +118,6 @@ export function buildRuntimeScanningPanelColumns({
       },
     },
     {
-      key: "lastScan",
-      label: t("col.lastScan"),
-      width: "118px",
-      sorter: (a, b) => {
-        const ta = getSourceConfig(configMap, a.probe.sourceId).lastScannedAt;
-        const tb = getSourceConfig(configMap, b.probe.sourceId).lastScannedAt;
-        return (
-          (ta ? new Date(ta).getTime() : 0) - (tb ? new Date(tb).getTime() : 0)
-        );
-      },
-      renderCell: (row) => {
-        const cfg = getSourceConfig(configMap, row.probe.sourceId);
-        const disabled = row.importable && !cfg.enabled;
-        return row.importable && !disabled && cfg.lastScannedAt ? (
-          <span className="whitespace-nowrap text-text-3">
-            {formatRelativeElapsedShort(new Date(cfg.lastScannedAt))}
-          </span>
-        ) : null;
-      },
-    },
-    {
       // Keep the combined control column pinned like the Settings CLI table.
       key: "actions",
       label: t("col.frequency"),
@@ -152,6 +130,14 @@ export function buildRuntimeScanningPanelColumns({
           <div className="flex items-center justify-end gap-2">
             {row.importable && (
               <>
+                {!disabled && cfg.lastScannedAt ? (
+                  <span
+                    className="whitespace-nowrap text-text-3"
+                    title={t("col.lastScan")}
+                  >
+                    {formatRelativeElapsedShort(new Date(cfg.lastScannedAt))}
+                  </span>
+                ) : null}
                 <Switch
                   checked={cfg.enabled}
                   onCheckedChange={(checked) =>
@@ -185,9 +171,9 @@ export function buildRuntimeScanningPanelColumns({
                 // re-sync); the caret opens Update / Clear + rescan (full rebuild).
                 // It remains icon-only because this dense row also owns a
                 // frequency selector and a second menu action; its treatment
-                // still shares Runtime's refresh-button props.
+                // uses the same secondary treatment as the toolbar refresh.
                 <SplitButton
-                  {...RUNTIME_REFRESH_BUTTON_PROPS}
+                  variant="secondary"
                   size="small"
                   iconOnly
                   menuSegmentWidth={22}
@@ -250,7 +236,7 @@ export function buildRuntimeScanningPanelColumns({
                 />
               ) : (
                 <Button
-                  {...RUNTIME_REFRESH_BUTTON_PROPS}
+                  variant="secondary"
                   size="small"
                   iconOnly
                   loading={row.rescanning}

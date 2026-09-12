@@ -1126,8 +1126,7 @@
       "copyPath": "コピー",
       "col": {
         "source": "ツール",
-        "config": "設定",
-        "capture": "記録"
+        "config": "設定"
       },
       "status": {
         "on": "オン",

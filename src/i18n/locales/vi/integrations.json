@@ -1126,8 +1126,7 @@
       "copyPath": "Sao chép",
       "col": {
         "source": "Công cụ",
-        "config": "Cấu hình",
-        "capture": "Thu thập"
+        "config": "Cấu hình"
       },
       "status": {
         "on": "Bật",

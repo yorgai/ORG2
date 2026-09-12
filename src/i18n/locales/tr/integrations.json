@@ -1126,8 +1126,7 @@
       "copyPath": "Kopyala",
       "col": {
         "source": "Araç",
-        "config": "Yapılandırma",
-        "capture": "Yakalama"
+        "config": "Yapılandırma"
       },
       "status": {
         "on": "Açık",

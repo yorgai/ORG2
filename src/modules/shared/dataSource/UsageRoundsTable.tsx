@@ -309,6 +309,8 @@ export default function UsageRoundsTable({
           searchInputSize: "default",
           rightContent: (
             <RuntimeRefreshButton
+              iconOnly
+              variant="secondary"
               label={t("usage.refresh")}
               onRefresh={onRefresh}
               refreshing={loading}

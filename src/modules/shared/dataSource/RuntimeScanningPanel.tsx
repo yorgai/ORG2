@@ -224,6 +224,8 @@ const RuntimeScanningPanel: React.FC = () => {
             rightContent:
               (rows?.length ?? 0) > 0 ? (
                 <RuntimeRefreshButton
+                  iconOnly
+                  variant="secondary"
                   label={t("rescanAll")}
                   onRefresh={() => void handleRescanAll()}
                   refreshing={rescanningAll}

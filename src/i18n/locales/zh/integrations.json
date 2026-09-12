@@ -1321,8 +1321,7 @@
       "copyPath": "复制",
       "col": {
         "source": "工具",
-        "config": "配置",
-        "capture": "捕获"
+        "config": "配置"
       },
       "status": {
         "on": "开启",

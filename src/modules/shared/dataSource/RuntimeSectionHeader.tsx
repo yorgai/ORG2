@@ -1,13 +1,9 @@
 import type { ReactNode } from "react";
 
 import Button from "@src/components/Button";
-import { TEXT_HOVER_REFRESH_BUTTON_PROPS } from "@src/components/Button/refreshActionProps";
 import { useRefreshSpin } from "@src/hooks/ui/useRefreshSpin";
 import { HugeiconsIcon, Refresh04Icon } from "@src/icons";
 import { SECTION_SUBHEADING_CLASSES } from "@src/modules/shared/layouts/SectionLayout";
-
-/** The compact text action with a hover surface shown in Runtime toolbars. */
-export { TEXT_HOVER_REFRESH_BUTTON_PROPS as RUNTIME_REFRESH_BUTTON_PROPS } from "@src/components/Button/refreshActionProps";
 
 interface RuntimeSectionHeaderProps {
   title: ReactNode;
@@ -69,9 +65,7 @@ export function RuntimeRefreshButton({
   return (
     <Button
       htmlType="button"
-      {...(variant === "tertiary"
-        ? TEXT_HOVER_REFRESH_BUTTON_PROPS
-        : { variant })}
+      variant={variant}
       iconOnly={iconOnly}
       size={variant === "secondary" ? "default" : "small"}
       disabled={disabled || refreshing}

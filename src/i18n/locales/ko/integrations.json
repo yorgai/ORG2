@@ -1126,8 +1126,7 @@
       "copyPath": "복사",
       "col": {
         "source": "도구",
-        "config": "구성",
-        "capture": "캡처"
+        "config": "구성"
       },
       "status": {
         "on": "켜짐",

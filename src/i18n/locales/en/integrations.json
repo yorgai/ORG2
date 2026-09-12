@@ -1314,8 +1314,7 @@
       "copyPath": "Copy",
       "col": {
         "source": "Tool",
-        "config": "Config",
-        "capture": "Capture"
+        "config": "Config"
       },
       "status": {
         "on": "On",

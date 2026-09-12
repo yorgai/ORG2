@@ -504,6 +504,8 @@ const SessionProvenanceRecentSignalsTable: React.FC = () => {
             searchInputSize: "default",
             rightContent: (
               <RuntimeRefreshButton
+                iconOnly
+                variant="secondary"
                 label={t("agentOrgs.sessionProvenance.signals.refresh", {
                   defaultValue: "Refresh",
                 })}

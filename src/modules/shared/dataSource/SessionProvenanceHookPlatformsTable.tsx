@@ -369,9 +369,7 @@ const SessionProvenanceHookPlatformsTable: React.FC = () => {
     },
     {
       key: "capture",
-      label: t("agentOrgs.sessionProvenance.col.capture", {
-        defaultValue: "Capture",
-      }),
+      label: "",
       width: SETTINGS_TABLE_COL.hug,
       align: "right",
       renderCell: (row) => (
@@ -482,6 +480,8 @@ const SessionProvenanceHookPlatformsTable: React.FC = () => {
           searchInputSize: "default",
           rightContent: (
             <RuntimeRefreshButton
+              iconOnly
+              variant="secondary"
               label={tCommon("actions.refresh")}
               onRefresh={() => void loadStatuses()}
               refreshing={refreshing}

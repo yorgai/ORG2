@@ -1126,8 +1126,7 @@
       "copyPath": "Copiar",
       "col": {
         "source": "Herramienta",
-        "config": "Configuración",
-        "capture": "Captura"
+        "config": "Configuración"
       },
       "status": {
         "on": "Activado",
