@@ -15,8 +15,6 @@ import {
   closeFindTarget,
   registerFindTarget,
 } from "@src/components/FindCard/findCoordinator";
-import SegmentedTextPill from "@src/components/SegmentedTextPill";
-import { getFileName } from "@src/util/file/pathUtils";
 
 import {
   REVIEW_SEARCH_LIMIT,
@@ -29,21 +27,17 @@ export function useReviewSearch({
   enabled,
   files,
   containerRef,
-  focusedPath,
   onNavigate,
   loadFile,
 }: {
   enabled: boolean;
   files: readonly ReviewSearchFile[];
   containerRef: RefObject<HTMLDivElement | null>;
-  focusedPath?: string | null;
   onNavigate: (match: ReviewSearchMatch) => void;
   loadFile?: (path: string) => Promise<ReviewSearchFile | null>;
 }) {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
-  const [scope, setScope] = useState<"review" | "file">("review");
-  const [selectedPath, setSelectedPath] = useState<string | null>(null);
   const [query, setQuery] = useState("");
   const [modes, setModes] = useState({
     caseSensitive: false,
@@ -65,10 +59,6 @@ export function useReviewSearch({
   useLayoutEffect(() => {
     navigateRef.current = onNavigate;
   }, [onNavigate]);
-  const path =
-    [selectedPath, focusedPath].find(
-      (path) => path && files.some((file) => file.path === path)
-    ) ?? files[0]?.path;
   useEffect(() => {
     if (!enabled) return;
     const target: FindTarget = {
@@ -158,14 +148,12 @@ export function useReviewSearch({
           type: "search",
           id,
           query: config,
-          path: scope === "file" ? path : undefined,
         });
       } else {
         const scan = async () => {
           const matches: ReviewSearchMatch[] = [];
           let error = false;
           for (const file of files) {
-            if (scope === "file" && file.path !== path) continue;
             if (!live || id !== generation.current || !worker) return;
             let loaded: ReviewSearchFile | null = null;
             try {
@@ -231,7 +219,7 @@ export function useReviewSearch({
       stop();
       document.removeEventListener("visibilitychange", visibility);
     };
-  }, [enabled, open, query, modes, scope, path, files, flush, loadFile]);
+  }, [enabled, open, query, modes, files, flush, loadFile]);
   const move = (delta: number) => {
     if (pending) {
       setFlush((v) => v + 1);
@@ -263,36 +251,8 @@ export function useReviewSearch({
             <div className="pointer-events-auto ml-auto w-full max-w-sm">
               <FindCard
                 scope="file"
-                targetName={
-                  scope === "file" && path
-                    ? getFileName(path)
-                    : t("actions.review")
-                }
-                scopeControls={
-                  <SegmentedTextPill
-                    ariaLabel={t("actions.find")}
-                    value={scope}
-                    onChange={(value) => {
-                      generation.current++;
-                      setPending(Boolean(query.trim()));
-                      if (value === "file" && !selectedPath)
-                        setSelectedPath(
-                          result.matches[index]?.path ?? path ?? null
-                        );
-                      setFlush(0);
-                      setScope(value);
-                    }}
-                    className="gap-px"
-                    options={[
-                      { value: "review", label: t("actions.review") },
-                      {
-                        value: "file",
-                        label: t("windowChrome.menus.file"),
-                        disabled: !path,
-                      },
-                    ]}
-                  />
-                }
+                targetName={t("actions.review")}
+                scopeControls={false}
                 statusText={
                   result.error
                     ? t("status.error")
@@ -327,6 +287,5 @@ export function useReviewSearch({
     card,
     match: open ? (result.matches[index] ?? null) : null,
     appliedQuery: open ? result.query : null,
-    selectPath: setSelectedPath,
   };
 }

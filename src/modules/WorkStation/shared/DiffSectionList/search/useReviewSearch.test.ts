@@ -49,7 +49,6 @@ function Harness() {
     loadFile,
     files,
     containerRef: ref,
-    focusedPath: "b",
     onNavigate: mocks.navigate,
   });
   // eslint-disable-next-line react-hooks/refs -- createElement forwards the ref to React without reading it
@@ -176,14 +175,14 @@ describe("review search lifecycle", () => {
     expect(mocks.navigate).toHaveBeenCalledOnce();
     expect(card().search.resultCount).toBe(1);
   });
-  it("supports review and selected-file scopes and immediate Enter flush", async () => {
+  it("always searches all review files without a scope switch and supports immediate Enter flush", async () => {
     act(() => card().search.setQuery("old"));
     act(() => card().search.nextResult());
     await advance(0);
     expect(workers[0].postMessage.mock.calls.at(-1)![0].path).toBeUndefined();
-    act(() => card().scopeControls.props.onChange("file"));
-    await advance(500);
-    expect(workers.at(-1)!.postMessage.mock.calls.at(-1)![0].path).toBe("b");
+    expect(workers[0].postMessage.mock.calls[0][0].files).toEqual(files);
+    expect(card().scopeControls).toBe(false);
+    expect(card().targetName).toBe("actions.review");
   });
   it("releases work on close and pauses while hidden", async () => {
     act(() => card().search.setQuery("old"));

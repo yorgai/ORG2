@@ -151,7 +151,6 @@ function DiffSectionListInner<TFile extends DiffFileSectionData>({
     files: reviewSearchFiles ?? reviewFiles,
     loadFile: loadReviewFile,
     containerRef: searchRootRef,
-    focusedPath,
     onNavigate: navigateSearch,
   });
 
@@ -373,16 +372,6 @@ function DiffSectionListInner<TFile extends DiffFileSectionData>({
     <div
       ref={searchRootRef}
       className="relative flex h-full min-h-0 flex-col overflow-hidden"
-      onPointerDownCapture={
-        enableReviewSearch
-          ? (event) => {
-              const path = (event.target as HTMLElement).closest<HTMLElement>(
-                "[data-diff-section-path]"
-              )?.dataset.diffSectionPath;
-              if (path) reviewSearch.selectPath(path);
-            }
-          : undefined
-      }
     >
       {reviewSearch.card}
       <div className="min-h-0 flex-1 overflow-hidden">
