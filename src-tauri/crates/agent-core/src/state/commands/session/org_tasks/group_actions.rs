@@ -91,7 +91,7 @@ pub async fn agent_org_send_group_root_message(
     display_text: Option<String>,
     images: Option<Vec<String>>,
 ) -> Result<AgentOrgGroupRootMessageResponse, String> {
-    crate::coordination::agent_org_runs::require_agent_org_redesign()?;
+    crate::coordination::agent_org_runs::require_agent_org_enabled()?;
     let read = session_org_read_context(&state, &session_id)
         .await?
         .ok_or_else(|| "agent_org_group_root_not_found".to_string())?;
@@ -336,7 +336,7 @@ pub async fn agent_org_stop_group_delivery(
     session_id: String,
     turn_intent_id: String,
 ) -> Result<AgentOrgGroupStopResponse, String> {
-    crate::coordination::agent_org_runs::require_agent_org_redesign()?;
+    crate::coordination::agent_org_runs::require_agent_org_enabled()?;
     let identity = resolve_group_turn(&state, &session_id, &turn_intent_id).await?;
     let persisted = if identity.source_kind == "group_mention" {
         let session_id = identity.session_id.clone();
@@ -392,7 +392,7 @@ pub async fn agent_org_retry_group_delivery(
     retry_turn_intent_id: Option<String>,
     acknowledge_possible_duplicate: bool,
 ) -> Result<AgentOrgGroupRetryResponse, String> {
-    crate::coordination::agent_org_runs::require_agent_org_redesign()?;
+    crate::coordination::agent_org_runs::require_agent_org_enabled()?;
     let identity = resolve_group_turn(&state, &session_id, &source_turn_intent_id).await?;
     let envelope = tokio::task::spawn_blocking(move || load_retry_envelope(identity))
         .await

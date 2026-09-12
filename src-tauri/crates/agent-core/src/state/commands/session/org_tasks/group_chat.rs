@@ -139,7 +139,7 @@ pub(super) async fn agent_org_send_group_chat_message_impl_with_display(
     display_text: Option<String>,
     images: Option<Vec<String>>,
 ) -> Result<AgentOrgGroupChatMessageResponse, String> {
-    crate::coordination::agent_org_runs::require_agent_org_redesign()?;
+    crate::coordination::agent_org_runs::require_agent_org_enabled()?;
     let content = content.trim();
     if content.is_empty() {
         return Err("Agent Org group chat message content is required".to_string());

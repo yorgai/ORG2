@@ -240,15 +240,21 @@ fn agent_org_prompt_worker_cannot_confuse_peer_chat_with_delegation() {
     let section = build_agent_org_context_section(&context, "agent-worker", Some("member-worker"));
     assert!(
         section.contains("Your task authority:** worker")
-            && section.contains("configured Writer grants are not active in this phase")
+            && section.contains(
+                "the frozen Team snapshot does not grant Writer authority to this member"
+            )
             && section.contains("cannot create, assign, or rewrite the Task graph")
             && section.contains("exact Task bound to your persisted TaskExecution turn")
             && section.contains("only you may start it"),
         "worker prompt must explain self-only task authority: {section}"
     );
     assert!(
-        section.contains("peer delivery remains disabled until the peer-send phase"),
-        "prompt must not activate configured peer links before the peer-send phase: {section}"
+        section.contains(
+            "During UserDirectedWork, a Member may message the Coordinator or a peer linked in the frozen launch snapshot"
+        ) && section.contains(
+            "During TaskExecution, a Member may message only the Coordinator"
+        ),
+        "prompt must describe the persisted Turn-specific routing rules: {section}"
     );
 }
 

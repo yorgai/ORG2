@@ -135,7 +135,7 @@ pub struct InboxRunSummary {
 #[tauri::command]
 pub async fn agent_org_run_list(limit: Option<usize>) -> Result<Vec<InboxRunSummary>, String> {
     use crate::core::coordination::agent_org_runs::AgentOrgRunStore;
-    crate::core::coordination::agent_org_runs::require_agent_org_redesign()?;
+    crate::core::coordination::agent_org_runs::require_agent_org_enabled()?;
     const MAX_LIMIT: usize = 200;
     let effective_limit = limit.map(|n| n.min(MAX_LIMIT)).unwrap_or(MAX_LIMIT);
     // This command backs a read-only Inbox list. Quiescence reconciliation is a

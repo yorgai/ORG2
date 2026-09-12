@@ -1,10 +1,10 @@
-//! Atomic ownership of the redesigned Agent Org private SQLite namespace.
+//! Atomic ownership of the canonical Agent Org private SQLite namespace.
 //!
 //! Old releases may recreate the retired names after a downgrade. Every new
 //! process therefore retires the exact known legacy set again; there is no
-//! one-time marker. Redesigned data is treated more conservatively: a partial
-//! or structurally unknown runtime namespace fails closed before any legacy
-//! object is dropped.
+//! one-time marker. Canonical runtime data is treated more conservatively: a
+//! partial or structurally unknown runtime namespace fails closed before any
+//! legacy object is dropped.
 
 use std::collections::BTreeMap;
 

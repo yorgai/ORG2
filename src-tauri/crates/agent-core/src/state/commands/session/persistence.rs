@@ -97,7 +97,7 @@ pub async fn agent_org_delete_team(
     state: tauri::State<'_, AgentAppState>,
     session_id: String,
 ) -> Result<DeleteSessionReceipt, String> {
-    crate::coordination::agent_org_runs::require_agent_org_redesign()?;
+    crate::coordination::agent_org_runs::require_agent_org_enabled()?;
     let planned_session_id = session_id.clone();
     let plan = tokio::task::spawn_blocking(move || {
         let conn = get_connection().map_err(|err| err.to_string())?;

@@ -30,7 +30,7 @@ pub async fn agent_org_session_intervention_state(
     state: tauri::State<'_, AgentAppState>,
     session_id: String,
 ) -> Result<AgentOrgSessionInterventionState, String> {
-    crate::coordination::agent_org_runs::require_agent_org_redesign()?;
+    crate::coordination::agent_org_runs::require_agent_org_enabled()?;
     let Some(read_context) = session_org_read_context(&state, &session_id).await? else {
         return Ok(AgentOrgSessionInterventionState { intervention: None });
     };
@@ -60,7 +60,7 @@ pub async fn agent_org_session_return_to_work_impl(
     intervention_receipt_id: String,
     request_id: String,
 ) -> Result<ReturnToWorkResult, String> {
-    crate::coordination::agent_org_runs::require_agent_org_redesign()?;
+    crate::coordination::agent_org_runs::require_agent_org_enabled()?;
     let read_context = session_org_read_context(state, &session_id)
         .await?
         .ok_or_else(|| format!("Session {session_id} is not part of an Agent Org run"))?;

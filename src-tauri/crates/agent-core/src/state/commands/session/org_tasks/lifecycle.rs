@@ -45,7 +45,7 @@ pub async fn agent_org_archive_run(
     session_id: String,
     request_id: String,
 ) -> Result<ArchiveRunOutcome, String> {
-    crate::coordination::agent_org_runs::require_agent_org_redesign()?;
+    crate::coordination::agent_org_runs::require_agent_org_enabled()?;
     let read_context = session_org_read_context(&state, &session_id)
         .await?
         .ok_or_else(|| format!("Session {session_id} is not part of an Agent Org run"))?;
@@ -74,7 +74,7 @@ pub async fn agent_org_pause_run(
     session_id: String,
     request_id: String,
 ) -> Result<PauseRunOutcome, String> {
-    crate::coordination::agent_org_runs::require_agent_org_redesign()?;
+    crate::coordination::agent_org_runs::require_agent_org_enabled()?;
     let read_context = session_org_read_context(&state, &session_id)
         .await?
         .ok_or_else(|| format!("Session {session_id} is not part of an Agent Org run"))?;
@@ -121,7 +121,7 @@ pub async fn agent_org_resume_run(
     session_id: String,
     request_id: String,
 ) -> Result<ResumeRunOutcome, String> {
-    crate::coordination::agent_org_runs::require_agent_org_redesign()?;
+    crate::coordination::agent_org_runs::require_agent_org_enabled()?;
     let read_context = session_org_read_context(&state, &session_id)
         .await?
         .ok_or_else(|| format!("Session {session_id} is not part of an Agent Org run"))?;

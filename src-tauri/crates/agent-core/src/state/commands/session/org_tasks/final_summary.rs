@@ -21,7 +21,7 @@ pub async fn agent_org_final_summary_retry(
     failed_attempt: i64,
     request_id: String,
 ) -> Result<FinalSummaryReceipt, String> {
-    crate::coordination::agent_org_runs::require_agent_org_redesign()?;
+    crate::coordination::agent_org_runs::require_agent_org_enabled()?;
     let read_context = session_org_read_context(&state, &session_id)
         .await?
         .ok_or_else(|| format!("Session {session_id} is not part of an Agent Org run"))?;

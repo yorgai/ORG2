@@ -23,7 +23,7 @@ pub struct DoorbellRepairReport {
 }
 
 pub fn spawn(app_handle: AppHandle) {
-    if !crate::coordination::agent_org_runs::agent_org_redesign_enabled() {
+    if !crate::coordination::agent_org_runs::agent_org_enabled() {
         return;
     }
     tauri::async_runtime::spawn(async move {

@@ -165,7 +165,7 @@ pub(crate) fn build_agent_org_context_section_with_task_snapshot(
             "- **Your task authority:** writer — the immutable Team launch snapshot grants Task graph tools in Direct Member, Group Mention, Member Inbox, and TaskExecution turns. During TaskExecution you may also start, annotate, complete, or fail only the exact Task bound to this persisted turn; Writer authority never permits impersonating another Task owner.".to_string()
         }
         Some(member_id) if context.participant_by_member_id(member_id).is_some() => {
-            "- **Your task authority:** worker — configured Writer grants are not active in this phase, so you cannot create, assign, or rewrite the Task graph. For the exact Task bound to your persisted TaskExecution turn, only you may start it, append progress/evidence, complete it with output, or fail it with a reason.".to_string()
+            "- **Your task authority:** worker — the frozen Team snapshot does not grant Writer authority to this member, so you cannot create, assign, or rewrite the Task graph. For the exact Task bound to your persisted TaskExecution turn, only you may start it, append progress/evidence, complete it with output, or fail it with a reason.".to_string()
         }
         _ => "- **Your task authority:** none — non-roster sessions cannot mutate the Agent Org task board.".to_string(),
     };
@@ -272,7 +272,7 @@ pub(crate) fn build_agent_org_context_section_with_task_snapshot(
 
     lines.push(String::new());
     lines.push(
-        "**Routing:** the Coordinator and every Member are always mutually reachable. Member-to-Member communication links are frozen in the launch snapshot, but peer delivery remains disabled until the peer-send phase."
+        "**Routing:** the Coordinator and every Member are always mutually reachable. During UserDirectedWork, a Member may message the Coordinator or a peer linked in the frozen launch snapshot. During TaskExecution, a Member may message only the Coordinator."
             .to_string(),
     );
     lines.push(String::new());

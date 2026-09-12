@@ -30,7 +30,7 @@ pub async fn agent_org_plan_approval_detail(
     approval_id: String,
     plan_revision_id: String,
 ) -> Result<AgentOrgPlanRevision, String> {
-    crate::coordination::agent_org_runs::require_agent_org_redesign()?;
+    crate::coordination::agent_org_runs::require_agent_org_enabled()?;
     let Some(read_context) = session_org_read_context(&state, &session_id).await? else {
         return Err(format!(
             "Session {session_id} is not part of an Agent Org run"
@@ -72,7 +72,7 @@ pub async fn agent_org_plan_approval_respond(
     decision: AgentOrgPlanApprovalDecision,
     feedback: Option<String>,
 ) -> Result<AgentOrgPlanRevision, String> {
-    crate::coordination::agent_org_runs::require_agent_org_redesign()?;
+    crate::coordination::agent_org_runs::require_agent_org_enabled()?;
     let Some(read_context) = session_org_read_context(&state, &session_id).await? else {
         return Err(format!(
             "Session {session_id} is not part of an Agent Org run"

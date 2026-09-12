@@ -128,12 +128,12 @@ test("WebDriver production bundles force-enable the Agent Org gate", () => {
 
   assert.equal(getDefinedValue(config, "process.env.ORGII_E2E"), '"1"');
   assert.equal(
-    getDefinedValue(config, "process.env.ORGII_AGENT_ORG_REDESIGN"),
+    getDefinedValue(config, "process.env.ORGII_AGENT_ORG_ENABLED"),
     '"1"'
   );
 });
 
-test("ordinary production bundles enable the Agent Org rollout by default", () => {
+test("ordinary production bundles enable Agent Org by default", () => {
   const config = withEnv(
     {
       ORGII_E2E: null,
@@ -145,7 +145,7 @@ test("ordinary production bundles enable the Agent Org rollout by default", () =
 
   assert.equal(getDefinedValue(config, "process.env.ORGII_E2E"), '"0"');
   assert.equal(
-    getDefinedValue(config, "process.env.ORGII_AGENT_ORG_REDESIGN"),
+    getDefinedValue(config, "process.env.ORGII_AGENT_ORG_ENABLED"),
     '"1"'
   );
 });
@@ -162,7 +162,7 @@ test("ordinary production bundles preserve an explicit Agent Org opt-out", () =>
 
   assert.equal(getDefinedValue(config, "process.env.ORGII_E2E"), '"0"');
   assert.equal(
-    getDefinedValue(config, "process.env.ORGII_AGENT_ORG_REDESIGN"),
+    getDefinedValue(config, "process.env.ORGII_AGENT_ORG_ENABLED"),
     '"0"'
   );
 });

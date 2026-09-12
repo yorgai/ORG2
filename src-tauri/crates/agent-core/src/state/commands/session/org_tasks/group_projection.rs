@@ -206,7 +206,7 @@ pub async fn agent_org_group_projection_page_impl(
     cursor: Option<&str>,
     limit: Option<usize>,
 ) -> Result<AgentOrgGroupProjectionPage, String> {
-    crate::coordination::agent_org_runs::require_agent_org_redesign()?;
+    crate::coordination::agent_org_runs::require_agent_org_enabled()?;
     let cursor = cursor.map(timeline::decode_cursor).transpose()?;
     let limit = limit.unwrap_or(DEFAULT_PAGE_LIMIT).clamp(1, MAX_PAGE_LIMIT);
     let session_id = session_id.to_string();

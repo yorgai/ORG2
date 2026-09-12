@@ -223,7 +223,7 @@ async function assertFeatureGatePreflight() {
   const frontendGate = await execJS(`
     return {
       helperPresent: Boolean(window.__e2e),
-      enablePresent: typeof window.__e2e?.debugAgentOrgEnableRedesign === "function",
+      enablePresent: typeof window.__e2e?.debugAgentOrgEnable === "function",
       compiledIdeUrl: window.__ORGII_E2E_IDE_SERVER_WS_URL__ ?? null,
     };
   `);
@@ -233,8 +233,8 @@ async function assertFeatureGatePreflight() {
     );
   }
   const enabled = unwrap(
-    await invokeE2E("debugAgentOrgEnableRedesign"),
-    "enable Agent Org redesign through webdriver-only Rust gate"
+    await invokeE2E("debugAgentOrgEnable"),
+    "enable Agent Org through webdriver-only Rust gate"
   );
   if (enabled.enabled !== true) {
     throw new Error(

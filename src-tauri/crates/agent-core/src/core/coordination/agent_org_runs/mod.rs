@@ -3,11 +3,11 @@
 //! A run records that an Agent Org launched through the normal Rust session
 //! stack, while the root session remains the transcript source of truth.
 
+mod availability;
 mod helpers;
 mod materialization;
 mod progress;
 mod quiescence;
-mod rollout;
 mod store;
 mod worker;
 
@@ -16,6 +16,10 @@ mod quiescence_blocking_inbox_tests;
 #[cfg(test)]
 mod tests;
 
+pub use availability::{
+    enable_for_webdriver_test as enable_agent_org_for_webdriver_test,
+    is_enabled as agent_org_enabled, require_enabled as require_agent_org_enabled,
+};
 pub(crate) use helpers::{context_for_run_record, row_to_run};
 pub use materialization::{
     AgentOrgInitialInput, AgentOrgInitialInputStatus, AgentOrgMaterializationAuthority,
@@ -29,10 +33,6 @@ pub use quiescence::{
     AgentOrgGuaranteedTurnEffects, AgentOrgQuiescenceAssessment, AgentOrgQuiescenceBlocker,
     AgentOrgQuiescenceDecision, AgentOrgQuiescenceFacts, AgentOrgQuiescenceProjection,
     AgentOrgQuiescenceSessionFact,
-};
-pub use rollout::{
-    enable_for_webdriver_test as enable_agent_org_for_webdriver_test,
-    is_enabled as agent_org_redesign_enabled, require_enabled as require_agent_org_redesign,
 };
 pub use store::AgentOrgRunStore;
 pub use worker::{WorkerSessionInfo, WorkerSessionRuntime};
@@ -361,7 +361,7 @@ impl AgentOrgRunContext {
         }
 
         RoutingDecision::Blocked(format!(
-            "recipient_member_id '{to_member_id}' is not currently routable from sender_member_id '{from_member_id}'; member peer delivery is not enabled until the peer-send phase. Allowed recipient_member_id values: {}",
+            "recipient_member_id '{to_member_id}' is not currently routable from sender_member_id '{from_member_id}'; formal message routing does not permit this member-to-member route. Allowed recipient_member_id values: {}",
             self.allowed_recipient_member_ids_for(from_member_id).join(", ")
         ))
     }
@@ -463,7 +463,7 @@ impl AgentOrgStartingFailure {
     }
 }
 
-/// Initialize the redesigned runtime run envelope in an already-isolated
+/// Initialize the canonical runtime run envelope in an already-isolated
 /// namespace. Production startup uses the complete schema coordinator; this
 /// narrower entry point remains available to focused unit tests.
 pub fn init_schema(conn: &Connection) -> SqliteResult<()> {

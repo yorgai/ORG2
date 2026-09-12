@@ -271,7 +271,7 @@ pub async fn agent_org_session_run_view_impl(
     state: &AgentAppState,
     session_id: &str,
 ) -> Result<Option<AgentOrgRunView>, String> {
-    crate::coordination::agent_org_runs::require_agent_org_redesign()?;
+    crate::coordination::agent_org_runs::require_agent_org_enabled()?;
     let Some(read_context) = session_org_read_context(state, session_id).await? else {
         return Ok(None);
     };

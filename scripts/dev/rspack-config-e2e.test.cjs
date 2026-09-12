@@ -51,11 +51,11 @@ const envExpressions = frontendEnvExpressions(
   path.resolve(__dirname, "../../src")
 );
 
-for (const [name, e2e, webdriver, exposed, rollout, enabled] of [
+for (const [name, e2e, webdriver, exposed, availability, enabled] of [
   ["ordinary dev", undefined, undefined, false, undefined, true],
   ["explicit E2E", "1", undefined, true, "0", true],
   ["WebDriver", "0", "1", true, "0", true],
-  ["rollout opt-out", undefined, undefined, false, "0", false],
+  ["availability opt-out", undefined, undefined, false, "0", false],
 ]) {
   test(`${name} startup configs run without a browser process global`, async () => {
     const keys = [
@@ -71,7 +71,7 @@ for (const [name, e2e, webdriver, exposed, rollout, enabled] of [
         e2e,
         webdriver,
         "13847",
-        rollout,
+        availability,
       ].entries()) {
         if (value === undefined) delete process.env[keys[index]];
         else process.env[keys[index]] = value;
@@ -93,7 +93,7 @@ for (const [name, e2e, webdriver, exposed, rollout, enabled] of [
       target: "web",
       entry: {
         ide: "./src/config/ideServer.ts",
-        rollout: "./src/config/agentOrgRedesign.ts",
+        availability: "./src/config/agentOrgAvailability.ts",
         env: `data:text/javascript,${encodeURIComponent(`export default [${(await envExpressions).join(",")}];`)}`,
       },
       module: config.module,
@@ -125,15 +125,12 @@ for (const [name, e2e, webdriver, exposed, rollout, enabled] of [
         await fs.readFile(path.join(outputPath, "ide.js"), "utf8"),
         context
       );
-      const rolloutContext = vm.createContext({});
+      const availabilityContext = vm.createContext({});
       vm.runInContext(
-        await fs.readFile(path.join(outputPath, "rollout.js"), "utf8"),
-        rolloutContext
+        await fs.readFile(path.join(outputPath, "availability.js"), "utf8"),
+        availabilityContext
       );
-      assert.equal(
-        rolloutContext.ideConfig.AGENT_ORG_REDESIGN_ENABLED,
-        enabled
-      );
+      assert.equal(availabilityContext.ideConfig.AGENT_ORG_ENABLED, enabled);
       const key = "__ORGII_E2E_IDE_SERVER_WS_URL__";
       assert.equal(
         context.window[key],

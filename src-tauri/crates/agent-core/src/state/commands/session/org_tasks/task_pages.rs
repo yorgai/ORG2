@@ -36,7 +36,7 @@ pub async fn agent_org_session_task_page(
     direction: Option<TaskPageDirection>,
     limit: Option<usize>,
 ) -> Result<AgentOrgTaskPage, String> {
-    crate::coordination::agent_org_runs::require_agent_org_redesign()?;
+    crate::coordination::agent_org_runs::require_agent_org_enabled()?;
     let read_context = session_org_read_context(&state, &session_id)
         .await?
         .ok_or_else(|| format!("Agent Org context not found for session {session_id}"))?;
@@ -79,7 +79,7 @@ pub async fn agent_org_session_task_detail(
     session_id: String,
     task_id: String,
 ) -> Result<Task, String> {
-    crate::coordination::agent_org_runs::require_agent_org_redesign()?;
+    crate::coordination::agent_org_runs::require_agent_org_enabled()?;
     let read_context = session_org_read_context(&state, &session_id)
         .await?
         .ok_or_else(|| format!("Agent Org context not found for session {session_id}"))?;
@@ -104,7 +104,7 @@ pub async fn agent_org_session_task_annotation_page(
     cursor: Option<String>,
     limit: Option<usize>,
 ) -> Result<TaskAnnotationPage, String> {
-    crate::coordination::agent_org_runs::require_agent_org_redesign()?;
+    crate::coordination::agent_org_runs::require_agent_org_enabled()?;
     let read_context = session_org_read_context(&state, &session_id)
         .await?
         .ok_or_else(|| format!("Agent Org context not found for session {session_id}"))?;

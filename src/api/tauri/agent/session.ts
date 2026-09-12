@@ -7,7 +7,7 @@ import { invoke } from "@tauri-apps/api/core";
 
 import { rpc } from "@src/api/tauri/rpc";
 import type { CliAgentType, NativeHarnessType } from "@src/api/types/keys";
-import { requireAgentOrgRedesign } from "@src/config/agentOrgRedesign";
+import { requireAgentOrgEnabled } from "@src/config/agentOrgAvailability";
 import type { OrgMemberLaunchOverride } from "@src/modules/MainApp/AgentOrgs/types";
 import type { WorkspaceSnapshot } from "@src/services/context/workspaceSnapshot";
 import type { SessionStatus } from "@src/types/session/session";
@@ -554,7 +554,7 @@ export interface SessionLaunchResult {
 export async function sessionLaunch(
   params: SessionLaunchParams
 ): Promise<SessionLaunchResult> {
-  if (params.agentOrgId) requireAgentOrgRedesign();
+  if (params.agentOrgId) requireAgentOrgEnabled();
   return rpc.agentSession.sessionLaunch({
     params,
   }) as Promise<SessionLaunchResult>;

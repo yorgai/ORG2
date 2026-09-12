@@ -72,7 +72,7 @@ pub async fn agent_org_task_handoff_request(
     state: tauri::State<'_, AgentAppState>,
     request: AgentOrgTaskHandoffRequest,
 ) -> Result<AgentOrgTaskHandoffRequestResult, String> {
-    crate::coordination::agent_org_runs::require_agent_org_redesign()?;
+    crate::coordination::agent_org_runs::require_agent_org_enabled()?;
     validate_request_shape(&request)?;
     let context = task_tools_context_for_root_command(&state, &request.session_id).await?;
     let run_id = context.org_context.run_id.clone();
@@ -423,7 +423,7 @@ pub async fn agent_org_task_handoff_resolve(
     state: tauri::State<'_, AgentAppState>,
     request: AgentOrgTaskHandoffResolveRequest,
 ) -> Result<TaskExecutionHandoffReceipt, String> {
-    crate::coordination::agent_org_runs::require_agent_org_redesign()?;
+    crate::coordination::agent_org_runs::require_agent_org_enabled()?;
     if request.session_id.trim().is_empty()
         || request.request_id.trim().is_empty()
         || request.receipt_id.trim().is_empty()

@@ -186,11 +186,11 @@ pub(crate) fn init_core_state(app: &tauri::App) {
         );
     }
 
-    if agent_core::coordination::agent_org_runs::agent_org_redesign_enabled() {
+    if agent_core::coordination::agent_org_runs::agent_org_enabled() {
         agent_core::coordination::agent_org_watchdog::spawn(app.handle().clone());
         tracing::info!("[AgentOrgWatchdog] Agent Org watchdog started");
     } else {
-        tracing::info!("[AgentOrgWatchdog] Agent Org redesign is disabled");
+        tracing::info!("[AgentOrgWatchdog] Agent Org is disabled");
     }
 
     agent_core::core::session::launch::spawn_agent_org_startup_recovery(agent_org_startup_state);
@@ -200,7 +200,7 @@ pub(crate) fn init_core_state(app: &tauri::App) {
     // feature is disabled and reacts to settings-file changes without polling.
     crate::api::mobile_bridge::relay::start();
 
-    if agent_core::coordination::agent_org_runs::agent_org_redesign_enabled() {
+    if agent_core::coordination::agent_org_runs::agent_org_enabled() {
         agent_core::state::commands::session::org_tasks::reconcile_pending_archive_teardowns(
             agent_org_archive_reconcile_state,
         );

@@ -17,9 +17,10 @@ impl AgentOrgRunStore {
         Ok(assessment)
     }
 
-    /// Atomically commit the only automatic lifecycle transition owned by
-    /// PR 1. Both snapshot certificates are required so a stale finalizer or
-    /// watchdog pass cannot idle a newer activation or newer work graph.
+    /// Atomically commit the only automatic lifecycle transition managed by
+    /// run quiescence: Running to Idle. Both snapshot certificates are required
+    /// so a stale finalizer or watchdog pass cannot idle a newer activation or
+    /// newer work graph.
     pub fn try_transition_working_to_idle(
         run_id: &str,
         expected_generation: i64,

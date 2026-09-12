@@ -43,8 +43,7 @@ const WATCHDOG_MAX_RECEIPTS: usize = 100;
 const WATCHDOG_TEAM_BUDGET: std::time::Duration = std::time::Duration::from_millis(250);
 
 // These budgets belong to direct event owners (member wake, task failure,
-// shutdown release), not to the periodic watchdog. They remain here until a
-// later ownership-only move so this formal-convergence change does not alter
-// those state machines.
+// shutdown release), not to the periodic watchdog. They share the watchdog's
+// durable recovery-attempt store, but the watchdog does not consume them.
 const RECOVERY_DELAYS_SECS: [i64; 3] = [60, 5 * 60, 15 * 60];
 const MEMBER_REWAKE: &str = "member_rewake";

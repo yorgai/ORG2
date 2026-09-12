@@ -702,7 +702,10 @@ module.exports = (env, argv) => {
         "process.env.ORGII_DEEP_LINK_SCHEME": JSON.stringify(
           process.env.ORGII_DEEP_LINK_SCHEME ?? "orgii"
         ),
-        "process.env.ORGII_AGENT_ORG_REDESIGN": JSON.stringify(
+        // The shell-facing key keeps its historical spelling so existing
+        // operator opt-outs retain the same behavior. Frontend code receives
+        // only the stable Agent Org availability name.
+        "process.env.ORGII_AGENT_ORG_ENABLED": JSON.stringify(
           isE2E ? "1" : (process.env.ORGII_AGENT_ORG_REDESIGN ?? "1")
         ),
         "process.env.E2E_BASE_URL": JSON.stringify(

@@ -8,7 +8,7 @@ type AgentOrgE2EHelpers = Pick<
   E2EHelpers,
   | "listAgentOrgs"
   | "removeAgentOrg"
-  | "debugAgentOrgEnableRedesign"
+  | "debugAgentOrgEnable"
   | "debugSessionOrgRuntimeSnapshot"
   | "debugSessionExecuteTool"
   | "debugSessionExecuteOrgTool"
@@ -27,11 +27,9 @@ type AgentOrgE2EHelpers = Pick<
 >;
 
 export function createAgentOrgHelpers(): AgentOrgE2EHelpers {
-  const debugAgentOrgEnableRedesign = async (): Promise<
-    Result<{ enabled: true }>
-  > => {
+  const debugAgentOrgEnable = async (): Promise<Result<{ enabled: true }>> => {
     try {
-      await invoke("debug_agent_org_enable_redesign");
+      await invoke("debug_agent_org_enable");
       return { ok: true, enabled: true };
     } catch (err) {
       return asError(err);
@@ -445,7 +443,7 @@ export function createAgentOrgHelpers(): AgentOrgE2EHelpers {
   };
 
   return {
-    debugAgentOrgEnableRedesign,
+    debugAgentOrgEnable,
     listAgentOrgs,
     removeAgentOrg,
     debugSessionOrgRuntimeSnapshot,

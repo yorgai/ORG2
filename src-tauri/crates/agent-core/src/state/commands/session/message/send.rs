@@ -189,7 +189,7 @@ async fn preflight_agent_org_turn_before_runtime(
         return Ok(None);
     };
 
-    crate::coordination::agent_org_runs::require_agent_org_redesign()?;
+    crate::coordination::agent_org_runs::require_agent_org_enabled()?;
     let status_run_id = run_id.clone();
     let run = tokio::task::spawn_blocking(move || {
         crate::coordination::agent_org_runs::AgentOrgRunStore::load(&status_run_id)

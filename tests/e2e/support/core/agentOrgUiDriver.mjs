@@ -349,7 +349,7 @@ export async function waitForApp() {
             && window.__e2e.getActiveSessionId
             && window.__e2e.getSessionAggregateRow
             && window.__e2e.promptDump
-            && window.__e2e.debugAgentOrgEnableRedesign
+            && window.__e2e.debugAgentOrgEnable
             && window.__e2e.agentOrgSessionRunView
             && window.__e2e.agentOrgSessionInterventionState
             && window.__e2e.agentOrgRunList
@@ -365,8 +365,8 @@ export async function waitForApp() {
     }
   );
   unwrap(
-    await invokeE2E("debugAgentOrgEnableRedesign"),
-    "enable Agent Org redesign in WebDriver artifact"
+    await invokeE2E("debugAgentOrgEnable"),
+    "enable Agent Org in WebDriver artifact"
   );
   let shellState = null;
   await browser.waitUntil(
@@ -534,8 +534,8 @@ export async function configureCreatorForAgentOrg({
   await navigateToWorkstationCode("before configure creator");
   unwrap(await invokeE2E("resetToNewSession"), "resetToNewSession");
   unwrap(
-    await invokeE2E("debugAgentOrgEnableRedesign"),
-    "re-enable Agent Org redesign after creator reset"
+    await invokeE2E("debugAgentOrgEnable"),
+    "re-enable Agent Org after creator reset"
   );
   unwrap(
     await invokeE2E("setAgentOrgMemberDraftConfig", {}, agentOrgId),

@@ -437,7 +437,7 @@ pub(crate) async fn launch_rust_agent_run(
     request: AgentRunLaunchRequest,
 ) -> Result<AgentRunLaunchResult, String> {
     if matches!(&request.target, AgentRunTarget::AgentOrg { .. }) {
-        crate::coordination::agent_org_runs::require_agent_org_redesign()?;
+        crate::coordination::agent_org_runs::require_agent_org_enabled()?;
     }
     let (workspace_path, branch, isolate, existing_worktree_path, additional_directories) =
         match &request.workspace {
@@ -1233,7 +1233,7 @@ impl Drop for UserDirectedRecoveryGuard {
 /// the EventStore bridge are ready. This is intentionally separate from the
 /// periodic Working watchdog.
 pub fn spawn_agent_org_startup_recovery(state: AgentAppState) {
-    if !crate::coordination::agent_org_runs::agent_org_redesign_enabled() {
+    if !crate::coordination::agent_org_runs::agent_org_enabled() {
         return;
     }
     tauri::async_runtime::spawn(async move {

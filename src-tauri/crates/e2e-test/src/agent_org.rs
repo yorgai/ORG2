@@ -746,7 +746,7 @@ pub async fn run_view_distinguishes_pending_and_in_progress_tasks(cfg: &Config) 
 ///
 /// The production overview panel renders one `run-view` payload: member
 /// `sessionRuntime.status`, task ownership, and per-member task counts.
-/// This scenario keeps that payload honest for the Phase 6 recovery surface:
+/// This scenario pins the recovery-visible Run View invariant:
 /// a failed worker can coexist with a released/unowned pending task and a peer
 /// that owns reclaimed in-progress work.
 pub async fn run_view_shows_failed_member_and_released_task_state(cfg: &Config) -> bool {
