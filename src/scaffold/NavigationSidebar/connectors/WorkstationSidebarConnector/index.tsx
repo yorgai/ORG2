@@ -375,21 +375,18 @@ export const WorkstationSidebarConnector: React.FC = () => {
     tSessions,
   });
 
-  const {
-    resetWorkManagementStateForProjectsContent,
-    activateMyStationRouteForProjectTabContent,
-    handleGoToNewSession,
-  } = useSidebarStationNavigation({
-    setStationMode,
-    setStationChatVisible,
-    openStartPageTab,
-    resetChatPanelSessionSurface,
-    setChatPanelCreateTarget,
-    goToNewSession,
-    location,
-    navigate,
-    t,
-  });
+  const { activateMyStationRouteForProjectTabContent, handleGoToNewSession } =
+    useSidebarStationNavigation({
+      setStationMode,
+      setStationChatVisible,
+      openStartPageTab,
+      resetChatPanelSessionSurface,
+      setChatPanelCreateTarget,
+      goToNewSession,
+      location,
+      navigate,
+      t,
+    });
 
   const {
     handleDeleteSession,
@@ -475,7 +472,6 @@ export const WorkstationSidebarConnector: React.FC = () => {
     enabled: workItemsContentVisible,
     activeProjectOrgId,
     activateMyStationRouteForProjectTabContent,
-    resetWorkManagementStateForProjectsContent,
     handleOpenLinkedWorkItemSession,
   });
   const { selectedMenuItemId, handleSessionCollapsedSectionIdsChange } =

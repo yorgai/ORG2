@@ -18,7 +18,6 @@ interface WorkItemsSidebarSurfaceParams {
     typeof useProjectsWorkItemMenuItems
   >[0]["selectedOrgId"];
   activateMyStationRouteForProjectTabContent: StationNavigation["activateMyStationRouteForProjectTabContent"];
-  resetWorkManagementStateForProjectsContent: StationNavigation["resetWorkManagementStateForProjectsContent"];
   handleOpenLinkedWorkItemSession: (item: NavigationMenuItem) => void;
 }
 
@@ -27,7 +26,6 @@ export function useWorkItemsSidebarSurface({
   enabled,
   activeProjectOrgId,
   activateMyStationRouteForProjectTabContent,
-  resetWorkManagementStateForProjectsContent,
   handleOpenLinkedWorkItemSession,
 }: WorkItemsSidebarSurfaceParams) {
   const [projectsSelectedMenuItemId, setProjectsSelectedMenuItemId] =
@@ -71,7 +69,6 @@ export function useWorkItemsSidebarSurface({
     projectsWorkItemMap,
     linkedSessionIds: projectsLinkedSessionIds,
     openLinkedSession: handleOpenLinkedWorkItemSession,
-    resetWorkManagementStateForProjectsContent,
     setProjectsGroupVisibleCounts,
     setProjectsSelectedMenuItemId,
     toChatPanelProject,

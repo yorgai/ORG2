@@ -52,9 +52,8 @@ vi.mock("@src/store/chatPanel/chatPanelTabsAtom", async () => {
       null,
       (_get, _set, value: unknown) => mocks.openOrganization(value)
     ),
-    openCreateTargetInChatPanelStartPageAtom: atom(
-      null,
-      (_get, _set, value: unknown) => mocks.openCreator(value)
+    openChatPanelCreateTargetAtom: atom(null, (_get, _set, value: unknown) =>
+      mocks.openCreator(value)
     ),
   };
 });
@@ -92,7 +91,6 @@ describe("persistent work-item sidebar surface", () => {
       enabled,
       activeProjectOrgId: orgId,
       activateMyStationRouteForProjectTabContent: activateDetail,
-      resetWorkManagementStateForProjectsContent: reset,
       handleOpenLinkedWorkItemSession: openLinkedSession,
     });
     useEffect(() => {
@@ -217,9 +215,7 @@ describe("persistent work-item sidebar surface", () => {
       target: CHAT_PANEL_CREATE_TARGET.WORK_ITEM,
       createProjectContext: { orgId: "org-a" },
     });
-    expect(reset).toHaveBeenCalledOnce();
-    expect(reset.mock.invocationCallOrder[0]).toBeLessThan(
-      mocks.openCreator.mock.invocationCallOrder[0]
-    );
+    expect(reset).not.toHaveBeenCalled();
+    expect(surface.selectedMenuItemId).toBe(linked.key);
   });
 });

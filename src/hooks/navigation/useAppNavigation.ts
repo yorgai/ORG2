@@ -190,9 +190,11 @@ export function useAppNavigation(): UseAppNavigationReturn {
         params.set("workflowId", options.workflowId);
       }
       const query = params.toString();
+      // Host-specific routes reopen My Station on entry. Session creation must
+      // preserve the current station and the user's chat-only/split layout.
       const path = query
-        ? `${ROUTES.workStation.code.path}?${query}`
-        : ROUTES.workStation.code.path;
+        ? `${ROUTES.workStation.base.path}?${query}`
+        : ROUTES.workStation.base.path;
       navigate(path);
     },
     [

@@ -32,13 +32,6 @@ export function useSidebarStationNavigation({
   navigate,
   t,
 }: SidebarStationNavigationParams) {
-  const resetWorkManagementStateForProjectsContent = useCallback(() => {
-    const stationMode: StationMode = "my-station";
-    setStationMode(stationMode);
-    setStationChatVisible(stationMode, true);
-    openStartPageTab({ title: t("routes.launchpad") });
-  }, [openStartPageTab, setStationChatVisible, setStationMode, t]);
-
   const activateMyStationRouteForProjectTabContent = useCallback(() => {
     const stationMode: StationMode = "my-station";
     const targetRoute = ROUTES.workStation.code.path;
@@ -59,7 +52,6 @@ export function useSidebarStationNavigation({
   });
 
   return {
-    resetWorkManagementStateForProjectsContent,
     activateMyStationRouteForProjectTabContent,
     handleGoToNewSession,
   };
