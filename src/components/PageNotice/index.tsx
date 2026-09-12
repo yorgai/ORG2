@@ -27,6 +27,8 @@ import {
   UnfoldMoreIcon,
 } from "@src/icons";
 
+import "./index.scss";
+
 /**
  * Shared neutral surface — flat outline, no tone accent, and a half-strength
  * Workstation-trail shadow for a little lift.
@@ -76,7 +78,7 @@ const DEFAULT_ICONS: Record<string, React.ReactNode> = {
  * global `* { user-select: none }` so users can select/copy titles, bodies and
  * technical details. Interactive children opt out again with `select-none`.
  */
-const SELECTABLE_TEXT_CLASS = "allow-select-deep";
+const SELECTABLE_TEXT_CLASS = "allow-select-deep page-notice__text";
 
 const PAGE_NOTICE_BASE_TEXT = {
   title: "block text-[13px] font-medium leading-[14px]",
@@ -265,7 +267,7 @@ const PageNotice: React.FC<PageNoticeProps> = ({
     <div
       role={role}
       data-testid={dataTestId}
-      className={`${ALERT_SURFACE_CLASS} ${isPill ? `inline-block w-fit max-w-full ${expanded ? ALERT_RADIUS_CLASS : "rounded-full"} px-3 py-2` : `${ALERT_RADIUS_CLASS} ${cardPaddingClass}`} ${className ?? ""}`}
+      className={`page-notice ${ALERT_SURFACE_CLASS} ${isPill ? `inline-block w-fit max-w-full ${expanded ? ALERT_RADIUS_CLASS : "rounded-full"} px-3 py-2` : `${ALERT_RADIUS_CLASS} ${cardPaddingClass}`} ${className ?? ""}`}
     >
       <div className={`flex items-center ${isPill ? "gap-1" : "gap-3"}`}>
         {isPill ? (

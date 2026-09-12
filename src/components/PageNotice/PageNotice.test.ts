@@ -56,6 +56,8 @@ describe("PageNotice", () => {
 
     const selectableCount = markup.split("allow-select-deep").length - 1;
     expect(selectableCount).toBe(3);
+    expect(markup.split("page-notice__text").length - 1).toBe(3);
+    expect(markup).toContain('class="page-notice ');
   });
 
   it("lets the icon inherit the alert title color", () => {
