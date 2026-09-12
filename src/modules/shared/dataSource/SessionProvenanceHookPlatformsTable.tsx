@@ -1,3 +1,4 @@
+import { invoke } from "@tauri-apps/api/core";
 import { useAtomValue } from "jotai";
 import React, {
   useCallback,
@@ -14,6 +15,7 @@ import type {
   SessionProvenanceHookStatus,
 } from "@src/api/tauri/rpc/schemas/agentOrgs";
 import Button from "@src/components/Button";
+import Message from "@src/components/Message";
 import type { IconProvider } from "@src/components/ModelIcon";
 import PageNotice from "@src/components/PageNotice";
 import SettingsTable, {
@@ -25,7 +27,11 @@ import Switch from "@src/components/Switch";
 import Tag, { type TagProps } from "@src/components/Tag";
 import { INFO_CARD_TOKENS } from "@src/config/detailPanelTokens";
 import { useMountedCleanup } from "@src/hooks/lifecycle/useMounted";
-import { ComputerTerminal01Icon, HugeiconsIcon } from "@src/icons";
+import {
+  ComputerTerminal01Icon,
+  FolderOpenIcon,
+  HugeiconsIcon,
+} from "@src/icons";
 import {
   SECTION_GAP_CLASSES,
   SectionContainer,
@@ -39,6 +45,7 @@ import {
 } from "@src/store/workspace";
 import { copyText } from "@src/util/data/clipboard";
 import { formatRelativeElapsedShort } from "@src/util/data/formatters/date";
+import { getFileManagerRevealLabelKey } from "@src/util/platform/fileManagerLabels";
 import { openFileInWorkStation } from "@src/util/ui/openFileInWorkStation";
 
 import { RuntimeRefreshButton } from "./RuntimeSectionHeader";
@@ -359,12 +366,34 @@ const SessionProvenanceHookPlatformsTable: React.FC = () => {
       }),
       renderCell: (row) =>
         row.status?.configPath ? (
-          <span
-            className="block truncate text-text-3"
+          <button
+            type="button"
+            className="flex max-w-full cursor-pointer items-center gap-1.5 text-left text-text-3 underline-offset-2 hover:underline focus-visible:underline focus-visible:ring-1 focus-visible:ring-primary-6 focus-visible:outline-none"
             title={row.status.configPath}
+            aria-label={`${t(getFileManagerRevealLabelKey())}: ${row.status.configPath}`}
+            onClick={(event) => {
+              event.stopPropagation();
+              const path = row.status?.configPath;
+              if (!path) return;
+              void invoke("show_in_folder", { path }).catch(
+                (error: unknown) => {
+                  Message.error(
+                    error instanceof Error ? error.message : String(error)
+                  );
+                }
+              );
+            }}
           >
-            {tildePath(row.status.configPath)}
-          </span>
+            <span className="min-w-0 truncate">
+              {tildePath(row.status.configPath)}
+            </span>
+            <HugeiconsIcon
+              icon={FolderOpenIcon}
+              size={14}
+              className="shrink-0"
+              aria-hidden
+            />
+          </button>
         ) : null,
     },
     {
