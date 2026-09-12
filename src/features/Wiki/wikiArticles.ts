@@ -15,7 +15,7 @@ export const WIKI_ARTICLES: WikiArticle[] = [
     summary:
       "Start a conversation, choose an agent and model, and follow the work in the Chat Panel.",
     steps: [
-      "Use Start a session to open the session creator and choose a working directory and available account.",
+      "Use Start a session below to open the session creator and choose a working directory and available account.",
       "Send instructions in the Chat Panel, inspect tool activity, and follow up in the same session.",
       "Use session search to return to earlier work; imports bring supported external CLI histories into the app.",
     ],
@@ -41,7 +41,7 @@ export const WIKI_ARTICLES: WikiArticle[] = [
     steps: [
       "Open the Code Editor from the station dock and choose a file or tab.",
       "Use Source Control to inspect diffs, stage or unstage changes, and commit.",
-      "Use Git History to inspect previous commits, or use Spotlight to open repository branches.",
+      "Use Git History to inspect previous commits, or open repository branches from the shortcut below.",
     ],
   },
   {
